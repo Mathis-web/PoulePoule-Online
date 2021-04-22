@@ -1,5 +1,6 @@
 const main = {
     socket: io('ws://localhost:3000'),
+    // socket: io('https://poulepoule-online.herokuapp.com/'),
 
     init: () => {
         main.usernameInput = document.getElementById('username');
