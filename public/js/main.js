@@ -1,5 +1,5 @@
 const main = {
-    socket: io('http://localhost:3000'),
+    socket: io('ws://localhost:3000'),
 
     init: () => {
         main.usernameInput = document.getElementById('username');
