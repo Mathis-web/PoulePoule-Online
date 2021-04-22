@@ -1,17 +1,20 @@
 require('dotenv').config();
 const express = require('express');
-const { start } = require('repl');
 const app = express();
 const http = require('http').createServer(app);
 const PORT = process.env.PORT || 3000;
 const router = require('./app/router');
+const cors = require('cors');
 const gameModule = require('./app/game');
 
+const server = app.listen(PORT, console.log(`Serveur launched on port ${PORT}`))
+
+app.use(cors());
 app.use(express.static('public'));
 app.use(router);
 
 
-const io = require('socket.io')(http, {
+const io = require('socket.io')(server, {
     origins: ['https://poulepoule-online.herokuapp.com/']
 });
 
@@ -152,5 +155,3 @@ io.on('connection', socket => {
     }
 
 })
-
-http.listen(PORT, console.log(`Serveur launched on port ${PORT}`))
