@@ -12,7 +12,7 @@ app.use(router);
 
 
 const io = require('socket.io')(http, {
-    origins: ['http://127.0.0.1:5500', 'https://poulepoule-online.herokuapp.com/']
+    origins: ['https://poulepoule-online.herokuapp.com/']
 });
 
 const { generateId } = require('./app/services');
