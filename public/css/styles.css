@@ -1,0 +1,377 @@
+* {
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-color: #be3231;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+/* HOMEPAGE */
+
+#homepage {
+    height: 100vh;
+    background-image: url(/images/poulepoulebackground.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: 120% auto;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#homepage h1 {
+    font-size: 3rem;
+    margin: 1em 0;
+    text-align: center;
+}
+
+#select-difficulty {
+    color: #cccccc;
+    border: none;
+    background-color: transparent;
+    font-size: 1em;
+}
+
+.select-difficulty-option {
+    color: black;
+}
+
+.game-form {
+    background-color: rgba(0,0,0,0.6);
+    padding: 2rem;
+    width: 80%;
+    max-width: 500px;
+    font-size: 1rem;
+    /* -webkit-box-shadow: 5px 5px 16px 5px rgba(0,0,0,0.66); 
+    box-shadow: 5px 5px 16px 5px rgba(0,0,0,0.66); */
+}
+
+.game-form h2 {
+    font-size: 1.5em;
+    color: #e6e6e6;
+    margin-bottom: 1em;
+}
+
+.game-form input[type="text"] {
+    border: none;
+    border-bottom: 1px solid #cccccc;
+    outline: none;
+    background-color: transparent;
+    color: white;
+    padding: 0.5rem;
+    font-size: 1em;
+}
+
+.game-form input[type="text"]::placeholder {
+    color: #cccccc;
+}
+
+.game-form button {
+    margin-left: 2rem;
+    background-color: #990000;
+    color: #cccccc;
+    border: none;
+    font-size: 1em;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: bold;
+}
+
+.game-form button:hover {
+    background-color: #660000;
+}
+
+.game-form div {
+    margin-bottom: 1em;
+}
+
+.game-form div:first-child {
+    margin-bottom: 2em;
+}
+
+.game-form div:last-child {
+    border-top: 2px solid lightgrey;
+    padding-top: 2rem;
+    margin-bottom: 0;
+}
+
+/* GAME PAGE */
+
+#gamepage {
+    display: none;
+    width: 80%;
+}
+
+.gamepage-container {
+    display: flex;
+}
+
+#gamepage .game{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0;
+    background-color: rgba(255,224,175,0.2);
+    width: 80%;
+}
+
+#gamepage .players-container {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    background-color: #fbcfaf;
+    color: black;
+    font-size: 1.2rem;
+}
+
+#gamepage button {
+    background-color: #990000;
+    color: #cccccc;
+    border: none;
+    font-size: 1em;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: bold;
+}
+ #gamepage button:hover {
+    background-color: #660000;
+ }
+
+.players-container #host-game-div,
+.players-container #game-code-div {
+    padding: 1rem;
+    border-bottom: 1px solid black;
+}
+
+.players-container .player {
+    padding: 1rem;
+}
+
+.players-container .player:first-child {
+    margin-top: 1rem;
+    padding: 1rem;
+}
+
+.player {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.player-name {
+    margin-right: 1rem;
+}
+
+.tableGame{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    max-width: 800px;
+    height: 60%;
+    max-height: 350px;
+    min-height: 350px;
+    border: 3px solid #E2A488;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: #E2A488;
+    position: relative;
+    margin: 20px 0 80px 0;
+}
+
+.tableGame .count {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0; 
+    right: 0;
+    background-color: black;
+    opacity: 0;
+    transition: opacity 0.2s;
+
+}
+
+.tableGame .count-number {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    color: white;
+    transform-origin: center;
+    animation: scale-in linear 0.7s;
+    animation-fill-mode: forwards;
+}
+
+.tableGame .results {
+    position: absolute;
+    width: 80%;
+    /* height: 100%; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.7);
+    color: #e6e6e6;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    font-size: 1.2em;
+    opacity: 0;
+    transition: opacity 0.3s;
+    padding: 1rem;
+}
+
+.tableGame .winner-message {
+    margin-bottom: 1.5rem
+}
+
+.tableGame img{
+    border-radius: 10px;
+}
+
+#card {
+    height: 300px;
+    width: auto;
+}
+
+.omelette{
+    /* width: 100%;
+    height: 100%; */
+    background-image: url(/images/omelette.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80% 80%;
+}
+
+
+.carte_out{
+    animation: transition-out cubic-bezier(0,.86,1,-0.02) 800ms;
+    animation-fill-mode: forwards;
+}
+
+
+@keyframes transition-out{
+    0% {
+        margin-bottom: 200%;
+    }
+    100%{
+        margin-bottom: -230%;
+    }
+}
+
+@keyframes scale-in {
+    0% {
+        transform: scale(0);
+    }
+    25% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(2);
+    }
+    75%{
+        transform: scale(1);
+    }
+    100%{
+        transform: scale(0);
+    }
+}
+
+@media all and (max-width: 1200px) {
+    #gamepage {
+        width: 100%;
+    }
+}
+
+@media all and (max-width:1000px){
+    #gamepage .players-container {
+        font-size: 1rem;
+        width: 30%;
+    }
+    #gamepage .results {
+        font-size: 1rem;
+    }
+    #homepage {
+        width: 100%;
+    }
+    .game-form {
+        font-size: 0.8rem;
+    }
+   
+}
+
+@media all and (max-width: 700px) {
+    #gamepage {
+        flex-direction: column;
+    }
+    #gamepage .players-container {
+        width: 100%;
+        font-size: 0.8rem;
+    }
+    #gamepage .game-info {
+        display: flex;
+        justify-content: space-around;
+        border-bottom: 1px solid black;
+    }
+    .players-container #host-game-div,
+    .players-container #game-code-div {
+        border:none;
+        padding: 0.5rem;
+    }
+    #gamepage .player {
+        border: none;
+        margin-top: 0;
+        padding: 0.5rem 1rem;;
+    }
+    #gamepage .player-name {
+        margin-right: 0.5rem;
+    }
+    #card {
+        height: 150px; 
+    }
+    #gamepage .game {
+        width: 100%;
+        height: 100%;
+    }
+    #gamepage .results {
+        font-size: 0.7rem;
+    }
+    .tableGame {
+        min-height: 250px;
+        max-height: 250px;
+        width: 75%;
+    }
+    #gamepage button {
+        font-size: 0.8rem;
+    }
+}
+
+@media all and (max-width: 500px) {
+    #homepage h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media all and (max-width: 360px) {
+    .game-form {
+        font-size: 0.7rem;
+        padding: 1rem;
+    }
+    #homepage h1 {
+        font-size: 2rem;
+    }
+    .game-form div {
+        display: flex;
+        flex-direction: column;
+    }
+    .game-form button {
+        margin: 1rem 0;
+    }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PoulePoule Online</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js" integrity="sha512-eVL5Lb9al9FzgR63gDs1MxcDS2wFu3loYAgjIH0+Hg38tCS8Ag62dwKyH+wzDb+QauDpEZjXbMn11blw8cbTJQ==" crossorigin="anonymous"></script>
+</head>
+<body>
+    <section class="container">
+
+        <div id="homepage">
+            <h1>PoulePoule Online</h1>
+            <div class="game-form">
+                <div>
+                    <input type="text" id="username" placeholder="Nom d'utilisateur">
+                </div>
+                <div>
+                    <h2>Créer une partie</h2>
+                    <select id="select-difficulty" required>
+                        <option value="" class="select-difficulty-option">-- Choisissez une difficulté --</option>
+                        <option value="level1" class="select-difficulty-option">Niveau 1 (Facile)</option>
+                        <option value="level2" class="select-difficulty-option">Niveau 2 (Moyen)</option>
+                        <option value="level3" class="select-difficulty-option">Niveau 3 (Difficile)</option>
+                    </select>
+                    <button type="submit" id="create-game-btn">Créer</button>
+                </div>
+                <div>
+                    <h2>Rejoindre une partie</h2>
+                    <input type="text" id="game-code" placeholder="Code">
+                    <button type="submit" id="join-game-btn">Rejoindre</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="gamepage">
+
+                <div class="players-container">
+                    <div class="game-info">
+                        <div id="host-game-div"></div>
+                        <div id="game-code-div"></div>
+                    </div>
+                    <div class="players"></div>
+                </div>
+                <div class="game">
+                    <button style="display: none" type="button" id="start-game-btn">Démarrer la partie</button>
+                    <button type="button" id="stop-btn" style="display: none">STOP</button>
+                    <div class="tableGame">
+                        <div class="count"></div>
+                        <div class="count-number"></div>
+                        <div class="results">
+                            <div class="winner-message"></div>
+                            <div class="score-message"></div>
+                        </div>
+                    </div>
+                    <button id="leave-room-btn" type="button">Quitter la salle de jeu</button>
+                </div>
+
+        </div>
+
+    </section>
+
+    <script src="/js/game.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>
