@@ -7,14 +7,12 @@ const router = require('./app/router');
 const cors = require('cors');
 const gameModule = require('./app/game');
 
-const server = app.listen(PORT, console.log(`Serveur launched on port ${PORT}`))
-
 app.use(cors());
 app.use(express.static('public'));
 app.use(router);
 
 
-const io = require('socket.io')(server, {
+const io = require('socket.io')(http, {
     origins: ['https://poulepoule-online.herokuapp.com/']
 });
 
@@ -155,3 +153,5 @@ io.on('connection', socket => {
     }
 
 })
+
+http.listen(PORT, console.log(`Serveur launched on port ${PORT}`))
