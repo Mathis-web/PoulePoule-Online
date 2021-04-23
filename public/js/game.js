@@ -45,16 +45,6 @@ const game = {
         game.startGameBtn.style.display = "block";
     },
 
-    // displayNewCard(number) {
-    //     if(game.tableGame.querySelector('#card')) {
-    //         game.tableGame.removeChild(game.tableGame.querySelector('#card'));
-    //     }
-    //     const newImg = game.arrayCards[number];
-    //     newImg.id = 'card';
-    //     newImg.classList.add('carte_out');
-    //     game.tableGame.appendChild(newImg);
-    // },
-
     displayNewCard(gameState) {
         game.numberOfCardsPlayed = 0;
         game.interval = setInterval(() => {

@@ -95,16 +95,6 @@ io.on('connection', socket => {
     function startGame() {
         const gameRoom = gameRooms[socket.gameCode];
         gameModule.start(gameRoom);
-        // let count = 0;
-        // gameRoom.interval = setInterval(() => {
-        //     io.sockets.in(socket.gameCode).emit('newCard', gameRoom.gameState.listeCartePose[count]);
-        //     count++;
-        //     gameRoom.gameState.numberCardsPlayed++;
-        //     if(gameRoom.gameState.listeCartePose.length === count) {
-        //         // console.log('Toutes les cartes ont été posées');
-        //         clearInterval(gameRoom.interval);
-        //     }
-        // }, gameRoom.gameState.speed);
         const gameState = {
             listeCartePose: gameRoom.gameState.listeCartePose,
             speed: gameRoom.gameState.speed
