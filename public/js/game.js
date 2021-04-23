@@ -34,7 +34,7 @@ const game = {
             if(player.chronometerValue) {
                 const span = document.createElement('span');
                 span.className = "player-time";
-                span.textContent = player.chronometerValue + "s";
+                span.textContent = player.chronometerValue.toFixed(2) + "s";
                 div.appendChild(span);
             }
             game.playersDiv.appendChild(div);
@@ -45,26 +45,7 @@ const game = {
         game.startGameBtn.style.display = "block";
     },
 
-    displayNewCard(number) {
-        if(game.tableGame.querySelector('#card')) {
-            game.tableGame.removeChild(game.tableGame.querySelector('#card'));
-        }
-        const newImg = game.arrayCards[number];
-        newImg.id = 'card';
-        newImg.classList.add('carte_out');
-        game.tableGame.appendChild(newImg);
-    },
-
-    // displayNewCard(gameState) {
-    //     let count = 0;
-    //     const interval = setInterval(() => {
-    //         // io.sockets.in(socket.gameCode).emit('newCard', gameRoom.gameState.listeCartePose[count]);
-    //         gameRoom.gameState.numberCardsPlayed++;
-    //         if(gameRoom.gameState.listeCartePose.length === count) {
-    //             clearInterval(interval);
-    //         }
-    //         count++;
-    //     }, gameState.speed);
+    // displayNewCard(number) {
     //     if(game.tableGame.querySelector('#card')) {
     //         game.tableGame.removeChild(game.tableGame.querySelector('#card'));
     //     }
@@ -73,6 +54,27 @@ const game = {
     //     newImg.classList.add('carte_out');
     //     game.tableGame.appendChild(newImg);
     // },
+
+    displayNewCard(gameState) {
+        game.numberOfCardsPlayed = 0;
+        game.interval = setInterval(() => {
+            if(gameState.listeCartePose.length === game.numberOfCardsPlayed) {
+                clearInterval(interval);
+            }
+            if(game.tableGame.querySelector('#card')) {
+                game.tableGame.removeChild(game.tableGame.querySelector('#card'));
+            }
+            // get the number of the card to display from the list in the gameState object
+            const cardNumber = gameState.listeCartePose[game.numberOfCardsPlayed]
+            // and get that card with the corresponding index in arrayCard
+            // ex: cardNumber = 0, so arrayCards[0] corresponds to the chicken card 
+            const newImg = game.arrayCards[cardNumber];
+            newImg.id = 'card';
+            newImg.classList.add('carte_out');
+            game.tableGame.appendChild(newImg);
+            game.numberOfCardsPlayed++;
+        }, gameState.speed);
+    },
 
     startTimer(number) {
         game.tableGame.classList.remove('omelette');
@@ -105,11 +107,12 @@ const game = {
     endChronometer() {
         const endChronometerValue = Date.now();
         const duration = (endChronometerValue - game.startChronometerValue) / 1000;
-        return duration.toFixed(2);
+        return duration;
     },
 
     stopGame(winner) {
         // game.tableGame.style.opacity = '0.5'
+        clearInterval(game.interval);
         const resultsDiv = document.querySelector('.results');
         game.tableGame.classList.add('omelette');
         const winnerDiv = document.querySelector('.winner-message');

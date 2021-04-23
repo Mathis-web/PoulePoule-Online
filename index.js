@@ -95,40 +95,39 @@ io.on('connection', socket => {
     function startGame() {
         const gameRoom = gameRooms[socket.gameCode];
         gameModule.start(gameRoom);
-        let count = 0;
-        gameRoom.interval = setInterval(() => {
-            io.sockets.in(socket.gameCode).emit('newCard', gameRoom.gameState.listeCartePose[count]);
-            count++;
-            gameRoom.gameState.numberCardsPlayed++;
-            if(gameRoom.gameState.listeCartePose.length === count) {
-                // console.log('Toutes les cartes ont été posées');
-                clearInterval(gameRoom.interval);
-            }
-        }, gameRoom.gameState.speed);
-        // const gameState = {
-        //     listeCartePose: gameRoom.gameState.listeCartePose,
-        //     speed: gameRoom.gameState.speed
-        // };
-        // io.sockets.in(socket.gameCode).emit('startGame', gameState);
+        // let count = 0;
+        // gameRoom.interval = setInterval(() => {
+        //     io.sockets.in(socket.gameCode).emit('newCard', gameRoom.gameState.listeCartePose[count]);
+        //     count++;
+        //     gameRoom.gameState.numberCardsPlayed++;
+        //     if(gameRoom.gameState.listeCartePose.length === count) {
+        //         // console.log('Toutes les cartes ont été posées');
+        //         clearInterval(gameRoom.interval);
+        //     }
+        // }, gameRoom.gameState.speed);
+        const gameState = {
+            listeCartePose: gameRoom.gameState.listeCartePose,
+            speed: gameRoom.gameState.speed
+        };
+        io.sockets.in(socket.gameCode).emit('startGame', gameState);
     }
 
-    function handleStopGame(chronometerValue) {
+    function handleStopGame(stopInfo) {
         const gameRoom = gameRooms[socket.gameCode];
         gameRoom.gameState.numberPlayersStoped++;
-        const numberOfCardsPlayed = gameRoom.gameState.numberCardsPlayed;
+        const numberOfCardsPlayed = stopInfo.numberOfCardsPlayed;
         const listeCartePose = gameRoom.gameState.listeCartePose.slice(0, numberOfCardsPlayed);
         const score = gameModule.calculScore(listeCartePose);
         const player = gameRoom.clients.find(player => player.name === socket.username);
         player.score = score;
-        player.chronometerValue = chronometerValue;
+        player.chronometerValue = stopInfo.chronometerValue;
         io.sockets.in(socket.gameCode).emit('newPlayer', {
             clients: gameRoom.clients,
             gameCode: socket.gameCode
         });
         socket.emit('score', score);
-        // if all players pressed stop button, stop the game and choose a winner
+        // if all players pressed stop button, choose a winner
         if(gameRoom.gameState.numberPlayersStoped === gameRoom.clients.length) {
-            clearInterval(gameRoom.interval);
             const winner = gameModule.chooseWinner(gameRoom);
             io.sockets.in(socket.gameCode).emit('stopGame', winner);
             const host = gameRooms[socket.gameCode].clients[0];
@@ -137,25 +136,25 @@ io.on('connection', socket => {
     }
 
     function startTimer() {
-         // reset players informations
-         gameRooms[socket.gameCode].clients.forEach(player => {
-            player.chronometerValue = null;
-            player.score = 0;
-        });
-        io.sockets.in(socket.gameCode).emit('newPlayer', {clients: gameRooms[socket.gameCode].clients, gameCode: socket.gameCode});
-        let timer = 5;
-        const timerValue = () => {
-            if (timer === 0)  {
-                clearInterval(interval);
-                socket.emit('endTimer');
-            }
-            io.sockets.in(socket.gameCode).emit('startTimer', timer);
-            timer--;
-        }
-        timerValue();
-        const interval = setInterval(timerValue, 1000);
-        
-    }
+        // reset players informations
+        gameRooms[socket.gameCode].clients.forEach(player => {
+           player.chronometerValue = null;
+           player.score = 0;
+       });
+       io.sockets.in(socket.gameCode).emit('newPlayer', {clients: gameRooms[socket.gameCode].clients, gameCode: socket.gameCode});
+       let timer = 5;
+       const timerValue = () => {
+           if (timer === 0)  {
+               clearInterval(interval);
+               socket.emit('endTimer');
+           }
+           io.sockets.in(socket.gameCode).emit('startTimer', timer);
+           timer--;
+       }
+       timerValue();
+       const interval = setInterval(timerValue, 1000);
+       
+   }
 
 })
 

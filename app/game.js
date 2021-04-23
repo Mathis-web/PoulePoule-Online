@@ -5,7 +5,6 @@ const game = {
             lotCarte: [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
             listeCartePose: [],
             numberPlayersStoped: 0,
-            numberCardsPlayed: 0,
             speed: game.choiceSpeed(gameRoom.difficulty)
         }
         game.generateCardsList(gameRoom.gameState)
@@ -32,7 +31,6 @@ const game = {
         for(let i = 0; i < gameState.lotCarte.length; i++) {
             const randomNumber = game.generateRandomNumber(0, gameState.lotCarte.length);
             gameState.listeCartePose.push(gameState.lotCarte[randomNumber]);
-            // gameState.lotCarte.slice(randomNumber, 1);
         }
     },
 

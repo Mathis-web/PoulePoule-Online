@@ -1,6 +1,6 @@
 const main = {
-    //socket: io('ws://localhost:3000'),
-    socket: io('https://poulepoule-online.herokuapp.com/'),
+    socket: io('ws://localhost:3000'),
+    // socket: io('https://poulepoule-online.herokuapp.com/'),
 
     init: () => {
         main.usernameInput = document.getElementById('username');
@@ -14,10 +14,10 @@ const main = {
     handleSocketEventListeners: () => {
         main.socket.on('init', game.initGameRoom);
         main.socket.on('newPlayer', game.displayPlayers);
-        main.socket.on('newCard', game.displayNewCard);
+        // main.socket.on('newCard', game.displayNewCard);
         main.socket.on('host', game.displayStartGameBtn);
         main.socket.on('startTimer', game.startTimer);
-        // main.socket.on('startGame', game.displayNewCard);
+        main.socket.on('startGame', game.displayNewCard);
         main.socket.on('endTimer', main.startGame);
         main.socket.on('stopGame', game.stopGame);
         main.socket.on('score', game.displayScore);
@@ -81,7 +81,11 @@ const main = {
     stopPlayer: () => {
         document.getElementById('stop-btn').style.display = "none";
         const chronometerValue = game.endChronometer();
-        main.socket.emit('stopBtnPressed', chronometerValue);
+        const stopInfo = {
+            numberOfCardsPlayed: game.numberOfCardsPlayed,
+            chronometerValue: chronometerValue
+        };
+        main.socket.emit('stopBtnPressed', stopInfo);
     },
 
     leaveRoom() {
