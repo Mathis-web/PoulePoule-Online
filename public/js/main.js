@@ -1,6 +1,6 @@
 const main = {
-    // socket: io('ws://localhost:3000'),
-    socket: io('https://poulepoule-online.herokuapp.com/'),
+    socket: io('ws://localhost:3000'),
+    // socket: io('https://poulepoule-online.herokuapp.com/'),
 
     init: () => {
         main.usernameInput = document.getElementById('username');
@@ -8,6 +8,7 @@ const main = {
         main.difficultySelection = document.getElementById('select-difficulty');
         main.handleEventListeners();
         main.handleSocketEventListeners();
+        main.preloadImages();
     },
 
     handleSocketEventListeners: () => {
@@ -84,6 +85,18 @@ const main = {
 
     leaveRoom() {
         location.reload();
+    },
+
+    preloadImages() {
+        const imgPoule = document.createElement('img');
+        const imgRenard = document.createElement('img');
+        const imgOeuf = document.createElement('img');
+
+        imgPoule.src = "/images/0.png";
+        imgRenard.src = "/images/1.png";
+        imgOeuf.src = "/images/2.png";
+
+        game.arrayCards = [imgPoule, imgRenard, imgOeuf];
     }
    
 }

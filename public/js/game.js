@@ -49,10 +49,9 @@ const game = {
         if(game.tableGame.querySelector('#card')) {
             game.tableGame.removeChild(game.tableGame.querySelector('#card'));
         }
-        const newImg = document.createElement('img');
-        newImg.setAttribute('id', 'card');
+        const newImg = game.arrayCards[number];
+        newImg.id = 'card';
         newImg.classList.add('carte_out');
-        newImg.src = `/images/${number}.png`;
         game.tableGame.appendChild(newImg);
     },
 
