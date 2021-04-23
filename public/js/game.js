@@ -55,6 +55,25 @@ const game = {
         game.tableGame.appendChild(newImg);
     },
 
+    // displayNewCard(gameState) {
+    //     let count = 0;
+    //     const interval = setInterval(() => {
+    //         // io.sockets.in(socket.gameCode).emit('newCard', gameRoom.gameState.listeCartePose[count]);
+    //         gameRoom.gameState.numberCardsPlayed++;
+    //         if(gameRoom.gameState.listeCartePose.length === count) {
+    //             clearInterval(interval);
+    //         }
+    //         count++;
+    //     }, gameState.speed);
+    //     if(game.tableGame.querySelector('#card')) {
+    //         game.tableGame.removeChild(game.tableGame.querySelector('#card'));
+    //     }
+    //     const newImg = game.arrayCards[number];
+    //     newImg.id = 'card';
+    //     newImg.classList.add('carte_out');
+    //     game.tableGame.appendChild(newImg);
+    // },
+
     startTimer(number) {
         game.tableGame.classList.remove('omelette');
         document.querySelector('.results').style.opacity = 0;

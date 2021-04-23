@@ -105,6 +105,11 @@ io.on('connection', socket => {
                 clearInterval(gameRoom.interval);
             }
         }, gameRoom.gameState.speed);
+        // const gameState = {
+        //     listeCartePose: gameRoom.gameState.listeCartePose,
+        //     speed: gameRoom.gameState.speed
+        // };
+        // io.sockets.in(socket.gameCode).emit('startGame', gameState);
     }
 
     function handleStopGame(chronometerValue) {
