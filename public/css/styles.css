@@ -345,7 +345,7 @@ body{
         height: 100%;
     }
     #gamepage .results {
-        font-size: 0.7rem;
+        font-size: 1rem;
     }
     .tableGame {
         min-height: 300px;
@@ -356,7 +356,7 @@ body{
         font-size: 0.8rem;
     }
     #gamepage #stop-btn {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
     }
 }
 
