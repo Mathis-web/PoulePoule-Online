@@ -34,8 +34,9 @@ body{
 
 #select-difficulty {
     color: #cccccc;
-    border: none;
+    border: 1px #cccccc solid;
     background-color: transparent;
+    padding: 0.7em;
     font-size: 1em;
 }
 
@@ -176,9 +177,8 @@ body{
     align-items: center;
     width: 60%;
     max-width: 800px;
-    height: 60%;
-    max-height: 350px;
-    min-height: 350px;
+    max-height: 370px;
+    min-height: 370px;
     border: 3px solid #E2A488;
     overflow: hidden;
     border-radius: 5px;
@@ -237,8 +237,12 @@ body{
 }
 
 #card {
-    height: 300px;
+    height: 350px;
     width: auto;
+}
+
+#gamepage #stop-btn {
+    font-size: 2rem;
 }
 
 .omelette{
@@ -334,7 +338,7 @@ body{
         margin-right: 0.5rem;
     }
     #card {
-        height: 150px; 
+        height: 200px; 
     }
     #gamepage .game {
         width: 100%;
@@ -344,12 +348,15 @@ body{
         font-size: 0.7rem;
     }
     .tableGame {
-        min-height: 250px;
-        max-height: 250px;
+        min-height: 300px;
+        max-height: 300px;
         width: 75%;
     }
     #gamepage button {
         font-size: 0.8rem;
+    }
+    #gamepage #stop-btn {
+        font-size: 1.4rem;
     }
 }
 
