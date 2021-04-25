@@ -7,7 +7,7 @@ body{
 }
 
 .container {
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
 }
@@ -366,7 +366,7 @@ body{
     }
 }
 
-@media all and (max-width: 360px) {
+@media all and (max-width: 390px) {
     .game-form {
         font-size: 0.7rem;
         padding: 1rem;
