@@ -22,7 +22,7 @@
                 </div>
                 <div>
                     <h2>Créer une partie</h2>
-                    <select id="select-difficulty" required>
+                    <select id="select-difficulty-homepage" class="select-difficulty" required>
                         <option value="" class="select-difficulty-option">-- Choisissez une difficulté --</option>
                         <option value="level1" class="select-difficulty-option">Niveau 1 (Facile)</option>
                         <option value="level2" class="select-difficulty-option">Niveau 2 (Moyen)</option>
@@ -48,6 +48,7 @@
                     </div>
                     <div class="players"></div>
                 </div>
+
                 <div class="game">
                     <button style="display: none" type="button" id="start-game-btn">Démarrer la partie</button>
                     <button type="button" id="stop-btn" style="display: none">STOP</button>
@@ -59,6 +60,20 @@
                             <div class="score-message"></div>
                         </div>
                     </div>
+
+                    <div class="change-difficulty" style="display: none">
+                        <h2>Modifier la difficulté</h2>
+                        <form id="change-difficulty-form">
+                            <select name="difficulty" class="select-difficulty">
+                                <option value="" class="select-difficulty-option">-- Choisissez une difficulté --</option>
+                                <option value="level1" class="select-difficulty-option">Niveau 1 (Facile)</option>
+                                <option value="level2" class="select-difficulty-option">Niveau 2 (Moyen)</option>
+                                <option value="level3" class="select-difficulty-option">Niveau 3 (Difficile)</option>
+                            </select>
+                            <button type="submit">Modifier</button>
+                        </form>
+                    </div>
+
                     <button id="leave-room-btn" type="button">Quitter la salle de jeu</button>
                 </div>
 

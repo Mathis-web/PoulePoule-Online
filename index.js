@@ -31,6 +31,7 @@ io.on('connection', socket => {
     socket.on('startTimer', startTimer);
     socket.on('disconnect', handleLeaveGame);
     socket.on('stopBtnPressed', handleStopGame);
+    socket.on('changeDifficulty', changeDifficulty);
 
     function handleCreateGame(username, difficulty) {
         const roomCode = generateId(6);
@@ -144,6 +145,11 @@ io.on('connection', socket => {
        timerValue();
        const interval = setInterval(timerValue, 1000);
        
+   }
+
+   function changeDifficulty(level) {
+        const gameRoom = gameRooms[socket.gameCode];
+        gameRoom.difficulty = level;
    }
 
 })

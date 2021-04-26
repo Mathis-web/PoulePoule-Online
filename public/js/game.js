@@ -11,7 +11,7 @@ const game = {
         username.textContent = info.name;
         game.hostGameDiv.textContent = "Hôte de la salle: " + info.name;
         game.gameCodeDiv.textContent = "Code de la salle: " + info.gameCode;
-        game.startGameBtn.style.display = "block";
+        game.displayHostElements();
         player.className = "player";
         player.appendChild(username);
         game.playersDiv.appendChild(player);
@@ -41,8 +41,14 @@ const game = {
         })
     },
 
-    displayStartGameBtn: () => {
+    displayHostElements: () => {
         game.startGameBtn.style.display = "block";
+        document.querySelector('.change-difficulty').style.display = "block";
+    },
+
+    hideHostElements: () => {
+        game.startGameBtn.style.display = "none";
+        document.querySelector('.change-difficulty').style.display = "none";
     },
 
     displayNewCard(gameState) {
@@ -67,8 +73,7 @@ const game = {
     },
 
     startTimer(number) {
-        game.tableGame.classList.remove('omelette');
-        document.querySelector('.results').style.opacity = 0;
+        game.hideResults();
         const count = document.querySelector('.count');
         count.style.opacity = 0.7;
         if (number === 0) {
@@ -80,6 +85,11 @@ const game = {
         div.textContent = number;
         div.className = "count-number";
         game.tableGame.appendChild(div);
+    },
+
+    hideResults() {
+        game.tableGame.classList.remove('omelette');
+        document.querySelector('.results').style.opacity = 0;
     },
 
     endTimer() {
@@ -95,8 +105,7 @@ const game = {
     },
 
     endChronometer() {
-        const endChronometerValue = Date.now();
-        const duration = (endChronometerValue - game.startChronometerValue) / 1000;
+        const duration = (Date.now() - game.startChronometerValue) / 1000;
         return duration;
     },
 

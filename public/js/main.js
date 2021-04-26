@@ -5,7 +5,7 @@ const main = {
     init: () => {
         main.usernameInput = document.getElementById('username');
         main.gameCodeInput = document.getElementById('game-code');
-        main.difficultySelection = document.getElementById('select-difficulty');
+        main.difficultySelection = document.getElementById('select-difficulty-homepage');
         main.handleEventListeners();
         main.handleSocketEventListeners();
         main.preloadImages();
@@ -15,7 +15,7 @@ const main = {
         main.socket.on('init', game.initGameRoom);
         main.socket.on('newPlayer', game.displayPlayers);
         // main.socket.on('newCard', game.displayNewCard);
-        main.socket.on('host', game.displayStartGameBtn);
+        main.socket.on('host', game.displayHostElements);
         main.socket.on('startTimer', game.startTimer);
         main.socket.on('startGame', game.displayNewCard);
         main.socket.on('endTimer', main.startGame);
@@ -34,11 +34,13 @@ const main = {
         const startGameBtn = document.getElementById('start-game-btn');
         const stopBtn = document.getElementById('stop-btn');
         const leaveRoomBtn = document.getElementById('leave-room-btn');
+        const changeDifficultyForm = document.getElementById('change-difficulty-form');
         createGameBtn.addEventListener('click', main.createGame);
         joinGameBtn.addEventListener('click', main.joinGame);
         startGameBtn.addEventListener('click', main.startTimer);
         stopBtn.addEventListener('click', main.stopPlayer);
         leaveRoomBtn.addEventListener('click', main.leaveRoom);
+        changeDifficultyForm.addEventListener('submit', main.handleChangeDifficulty);
     },
 
     joinGame: () => {
@@ -70,7 +72,7 @@ const main = {
     },
 
     startTimer: () => {
-        document.getElementById('start-game-btn').style.display = "none";
+        game.hideHostElements();
         main.socket.emit('startTimer');
     },
 
@@ -86,6 +88,17 @@ const main = {
             chronometerValue: chronometerValue
         };
         main.socket.emit('stopBtnPressed', stopInfo);
+    },
+
+    handleChangeDifficulty: (e) => {
+        e.preventDefault();
+        const level = e.target.elements.difficulty.value;
+        if(level === "") {
+            alert('Choisissez une difficulté.');
+            return;
+        }
+        main.socket.emit('changeDifficulty', level);
+        alert('La difficulé a bien été modifiée.');
     },
 
     leaveRoom() {
