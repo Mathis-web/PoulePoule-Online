@@ -17,7 +17,7 @@ const game = {
         game.playersDiv.appendChild(player);
     },
 
-    displayPlayers: (gameInfo) => {
+    displayGameInfo: (gameInfo) => {
         game.playersDiv.innerHTML = '';
         game.gameCodeDiv.textContent = "Code de la salle: " + gameInfo.gameCode;
         gameInfo.clients.forEach((player) => {

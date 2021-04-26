@@ -68,7 +68,7 @@ io.on('connection', socket => {
         socket.username = info.username;
         socket.join(info.gameCode);
         gameRoom.clients.push(player);
-        io.sockets.in(info.gameCode).emit('newPlayer', {clients: gameRoom.clients, gameCode: info.gameCode});
+        io.sockets.in(info.gameCode).emit('gameInfo', {clients: gameRoom.clients, gameCode: info.gameCode});
     }
 
     // find the player that leaved the game and remove it in the gameRoom object
@@ -89,7 +89,7 @@ io.on('connection', socket => {
             }
             gameRoom.clients.splice(gameRoom.clients.indexOf(player), 1);
             // display start game btn to the new host of the room
-            io.sockets.in(socket.gameCode).emit('newPlayer', {clients: gameRoom.clients, gameCode: socket.gameCode});
+            io.sockets.in(socket.gameCode).emit('gameInfo', {clients: gameRoom.clients, gameCode: socket.gameCode});
         }
     }
 
@@ -112,14 +112,14 @@ io.on('connection', socket => {
         const player = gameRoom.clients.find(player => player.name === socket.username);
         player.score = score;
         player.chronometerValue = stopInfo.chronometerValue;
-        io.sockets.in(socket.gameCode).emit('newPlayer', {
-            clients: gameRoom.clients,
-            gameCode: socket.gameCode
-        });
         socket.emit('score', score);
         // if all players pressed stop button, choose a winner
         if(gameRoom.gameState.numberPlayersStoped === gameRoom.clients.length) {
             const winner = gameModule.chooseWinner(gameRoom);
+            io.sockets.in(socket.gameCode).emit('gameInfo', {
+                clients: gameRoom.clients,
+                gameCode: socket.gameCode
+            });
             io.sockets.in(socket.gameCode).emit('stopGame', winner);
             const host = gameRooms[socket.gameCode].clients[0];
             io.to(host.id).emit('host');
@@ -132,7 +132,7 @@ io.on('connection', socket => {
            player.chronometerValue = null;
            player.score = 0;
        });
-       io.sockets.in(socket.gameCode).emit('newPlayer', {clients: gameRooms[socket.gameCode].clients, gameCode: socket.gameCode});
+       io.sockets.in(socket.gameCode).emit('gameInfo', {clients: gameRooms[socket.gameCode].clients, gameCode: socket.gameCode});
        let timer = 5;
        const timerValue = () => {
            if (timer === 0)  {

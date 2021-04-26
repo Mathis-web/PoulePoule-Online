@@ -1,6 +1,6 @@
 const main = {
-    socket: io('ws://localhost:3000'),
-    // socket: io('https://poulepoule-online.herokuapp.com/'),
+    // socket: io('ws://localhost:3000'),
+    socket: io('https://poulepoule-online.herokuapp.com/'),
 
     init: () => {
         main.usernameInput = document.getElementById('username');
@@ -13,7 +13,7 @@ const main = {
 
     handleSocketEventListeners: () => {
         main.socket.on('init', game.initGameRoom);
-        main.socket.on('newPlayer', game.displayPlayers);
+        main.socket.on('gameInfo', game.displayGameInfo);
         // main.socket.on('newCard', game.displayNewCard);
         main.socket.on('host', game.displayHostElements);
         main.socket.on('startTimer', game.startTimer);
