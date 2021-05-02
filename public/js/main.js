@@ -14,13 +14,14 @@ const main = {
     handleSocketEventListeners: () => {
         main.socket.on('init', game.initGameRoom);
         main.socket.on('gameInfo', game.displayGameInfo);
-        // main.socket.on('newCard', game.displayNewCard);
+        main.socket.on('newCard', game.displayNewCard);
         main.socket.on('host', game.displayHostElements);
         main.socket.on('startTimer', game.startTimer);
         main.socket.on('startGame', game.displayNewCard);
         main.socket.on('endTimer', main.startGame);
         main.socket.on('stopGame', game.stopGame);
         main.socket.on('score', game.displayScore);
+        main.socket.on('disconnect', main.refreshPage);
         main.socket.on('errorJoinGame', (message) => {
             document.getElementById('homepage').style.display = "block";
             document.getElementById('gamepage').style.display = "none";
@@ -115,6 +116,11 @@ const main = {
         imgOeuf.src = "/images/2.png";
 
         game.arrayCards = [imgPoule, imgRenard, imgOeuf];
+    },
+
+    refreshPage() {
+        console.log('recharge la page')
+        location.reload();
     }
    
 }
