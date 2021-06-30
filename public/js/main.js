@@ -1,6 +1,6 @@
 const main = {
-    // socket: io('ws://localhost:3000'),
-    socket: io('https://poulepoule-online.herokuapp.com/'),
+    socket: io('ws://localhost:3000'),
+    // socket: io('https://poulepoule-online.herokuapp.com/'),
 
     init: () => {
         main.usernameInput = document.getElementById('username');
@@ -21,7 +21,7 @@ const main = {
         main.socket.on('endTimer', main.startGame);
         main.socket.on('stopGame', game.stopGame);
         main.socket.on('score', game.displayScore);
-        main.socket.on('disconnect', main.refreshPage);
+        // main.socket.on('disconnect', main.refreshPage);
         main.socket.on('errorJoinGame', (message) => {
             document.getElementById('homepage').style.display = "block";
             document.getElementById('gamepage').style.display = "none";
@@ -119,7 +119,6 @@ const main = {
     },
 
     refreshPage() {
-        console.log('recharge la page')
         location.reload();
     }
    
