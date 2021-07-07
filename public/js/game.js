@@ -6,6 +6,7 @@ const game = {
     tableGame: document.querySelector('.tableGame'),
 
     initGameRoom: (info) => {
+        console.log('yoo ça initialise lààààà')
         const player = document.createElement('div');
         const username = document.createElement('span');
         username.textContent = info.name;

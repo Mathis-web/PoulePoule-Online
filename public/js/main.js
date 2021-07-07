@@ -21,7 +21,7 @@ const main = {
         main.socket.on('endTimer', main.startGame);
         main.socket.on('stopGame', game.stopGame);
         main.socket.on('score', game.displayScore);
-        // main.socket.on('disconnect', main.refreshPage);
+        main.socket.on('disconnect', main.leaveRoom);
         main.socket.on('errorJoinGame', (message) => {
             document.getElementById('homepage').style.display = "block";
             document.getElementById('gamepage').style.display = "none";
@@ -36,6 +36,7 @@ const main = {
         const stopBtn = document.getElementById('stop-btn');
         const leaveRoomBtn = document.getElementById('leave-room-btn');
         const changeDifficultyForm = document.getElementById('change-difficulty-form');
+
         createGameBtn.addEventListener('click', main.createGame);
         joinGameBtn.addEventListener('click', main.joinGame);
         startGameBtn.addEventListener('click', main.startTimer);
@@ -103,6 +104,7 @@ const main = {
     },
 
     leaveRoom() {
+        alert("Une erreur s'est produite, vous allez être redirigé vers la page d'accueil.");
         location.reload();
     },
 
@@ -118,10 +120,6 @@ const main = {
         game.arrayCards = [imgPoule, imgRenard, imgOeuf];
     },
 
-    refreshPage() {
-        location.reload();
-    }
-   
 }
 
 main.init();

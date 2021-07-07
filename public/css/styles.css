@@ -44,7 +44,7 @@ body{
     color: black;
 }
 
-.game-form {
+.homepage-form {
     background-color: rgba(0,0,0,0.6);
     padding: 2rem;
     width: 80%;
@@ -54,13 +54,13 @@ body{
     box-shadow: 5px 5px 16px 5px rgba(0,0,0,0.66); */
 }
 
-.game-form h2 {
+.homepage-form h2 {
     font-size: 1.5em;
     color: #e6e6e6;
     margin-bottom: 1em;
 }
 
-.game-form input[type="text"] {
+.homepage-form input[type="text"] {
     border: none;
     border-bottom: 1px solid #cccccc;
     outline: none;
@@ -70,11 +70,11 @@ body{
     font-size: 1em;
 }
 
-.game-form input[type="text"]::placeholder {
+.homepage-form input[type="text"]::placeholder {
     color: #cccccc;
 }
 
-.game-form button {
+.homepage-form button {
     margin-left: 2rem;
     background-color: #990000;
     color: #cccccc;
@@ -86,19 +86,19 @@ body{
     font-weight: bold;
 }
 
-.game-form button:hover {
+.homepage-form button:hover {
     background-color: #660000;
 }
 
-.game-form div {
+.homepage-form div {
     margin-bottom: 1em;
 }
 
-.game-form div:first-child {
+.homepage-form div:first-child {
     margin-bottom: 2em;
 }
 
-.game-form div:last-child {
+.homepage-form div:last-child {
     border-top: 2px solid lightgrey;
     padding-top: 2rem;
     margin-bottom: 0;
@@ -325,7 +325,7 @@ body{
     #homepage {
         width: 100%;
     }
-    .game-form {
+    .homepage-form {
         font-size: 0.8rem;
     }
    
@@ -387,18 +387,18 @@ body{
 }
 
 @media all and (max-width: 390px) {
-    .game-form {
+    .homepage-form {
         font-size: 0.7rem;
         padding: 1rem;
     }
     #homepage h1 {
         font-size: 2rem;
     }
-    .game-form div {
+    .homepage-form div {
         display: flex;
         flex-direction: column;
     }
-    .game-form button {
+    .homepage-form button {
         margin: 1rem 0;
     }
 }

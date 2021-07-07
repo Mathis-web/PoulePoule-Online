@@ -47,7 +47,6 @@ const handleGameRooms = {
                 newHost.role = 'host';
                 newRoomState.isHostGone = true;
                 newRoomState.newHost = newHost;
-                // io.to(gameRoom.clients[1].id).emit('host');
             }    
             else {
                 delete gameRooms[roomCode];
@@ -57,7 +56,6 @@ const handleGameRooms = {
         gameRoom.clients.splice(gameRoom.clients.indexOf(leavingPlayer), 1);
         newRoomState.gameRoom = gameRoom;
         return newRoomState;
-        // io.sockets.in(socket.gameCode).emit('gameInfo', {clients: gameRoom.clients, gameCode: socket.gameCode});
     },
 
     startGame(roomCode) {

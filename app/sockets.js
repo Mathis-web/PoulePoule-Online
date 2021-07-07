@@ -1,10 +1,9 @@
 const handleGameRooms = require('./gameRooms');
 
-module.exports.listen = function(server) {
-    // receives the server as a function parameter and launch it
-    const io = require('socket.io')(server);
+module.exports.listen = function(io) {
 
-    io.on('connection', socket => {
+     // receives the server as a function parameter and launch it
+     io.on('connection', socket => {
 
         socket.on('newGame', createRoom);
         socket.on('joinGame', joinRoom);
@@ -14,7 +13,7 @@ module.exports.listen = function(server) {
         socket.on('disconnect', leaveRoom);
         socket.on('stopBtnPressed', handleStopGame);
         socket.on('changeDifficulty', changeDifficulty);
-    
+   
         function createRoom(username, difficulty) {
             const hostPlayer = {
                 id: socket.id,
@@ -41,12 +40,16 @@ module.exports.listen = function(server) {
             };
             handleGameRooms.join(info.gameCode, guestPlayer);
             socket.gameCode = gameRoom.code;
-            socket.username = gameRoom.code;
+            socket.username = info.username;
             socket.join(gameRoom.code);
             io.sockets.in(gameRoom.code).emit('gameInfo', {clients: gameRoom.clients, gameCode: gameRoom.code});
         }
     
         function leaveRoom() {
+            if(socket.gameCode) socket.leave(socket.gameCode);
+            // else, means that the player didn't join a room
+            else return;
+
             const newRoomState = handleGameRooms.leave(socket.gameCode, socket.id);
             
             if(newRoomState) {
@@ -85,6 +88,7 @@ module.exports.listen = function(server) {
            const timerValue = () => {
                if (timer === 0)  {
                    clearInterval(interval);
+                   // this event is only emitted to the host
                    socket.emit('endTimer');
                }
                io.sockets.in(socket.gameCode).emit('startTimer', timer);
@@ -99,5 +103,7 @@ module.exports.listen = function(server) {
             handleGameRooms.changeDifficulty(socket.gameCode, level)
        }
     
+       
     })
+  
 };
