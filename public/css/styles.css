@@ -111,8 +111,30 @@ body{
     width: 80%;
 }
 
-.gamepage-container {
+#gamepage .game-container {
+    width: 100%;
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* hide scrollbar for Internet Explorer, Edge */
+    scrollbar-width: none;
+    padding: 20px 0;
+}
+
+#gamepage .menu {
     display: flex;
+    justify-content: space-around;
+}
+
+#gamepage .menu-container li {
+    cursor: pointer;
+}
+
+#gamepage .menu-container li.active {
+    color: white;
+    font-weight: bold;
+}
+
+#gamepage .menu-content {
+    display: none;
 }
 
 #gamepage .game{
@@ -120,8 +142,10 @@ body{
     flex-direction: column;
     align-items: center;
     padding: 40px 0;
-    background-color: rgba(255,224,175,0.2);
-    width: 80%;
+}
+/* hide scrollbar for chrome, firefox, opera...*/
+#gamepage .game-container::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
 }
 
 #gamepage .players-container {
@@ -131,6 +155,13 @@ body{
     background-color: #fbcfaf;
     color: black;
     font-size: 1.2rem;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none;
+    overflow-y: scroll;
+}
+
+#gamepage .players-container::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
 }
 
 #gamepage button {

@@ -36,6 +36,9 @@ const main = {
         const stopBtn = document.getElementById('stop-btn');
         const leaveRoomBtn = document.getElementById('leave-room-btn');
         const changeDifficultyForm = document.getElementById('change-difficulty-form');
+        const menuElements = document.querySelectorAll('.menu-container ul li').forEach(element => {
+            element.addEventListener('click', game.handleClickMenu)
+        })
 
         createGameBtn.addEventListener('click', main.createGame);
         joinGameBtn.addEventListener('click', main.joinGame);

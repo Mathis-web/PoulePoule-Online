@@ -43,15 +43,23 @@
 
         <div id="gamepage">
 
-                <div class="players-container">
-                    <div class="game-info">
-                        <div id="host-game-div"></div>
-                        <div id="game-code-div"></div>
-                    </div>
-                    <div class="players"></div>
+            <div class="players-container">
+                <div class="game-info">
+                    <div id="host-game-div"></div>
+                    <div id="game-code-div"></div>
                 </div>
+                <div class="players"></div>
+            </div>
 
-                <div class="game">
+            <div class="game-container">
+                <nav class="menu-container">
+                    <ul class="menu">
+                        <li class="active" data-menu="game">JEU</li>
+                        <li data-menu="settings">PERSONNALISATIONS</li>
+                    </ul>
+                </nav>
+
+                <div class="menu-content game active" data-menu="game">
                     <button style="display: none" type="button" id="start-game-btn">Démarrer la partie</button>
                     <button type="button" id="stop-btn" style="display: none">STOP</button>
                     <div class="tableGame">
@@ -62,7 +70,7 @@
                             <div class="score-message"></div>
                         </div>
                     </div>
-
+                
                     <div class="change-difficulty" style="display: none">
                         <h2>Modifier la difficulté</h2>
                         <form id="change-difficulty-form">
@@ -78,6 +86,12 @@
 
                     <button id="leave-room-btn" type="button">Quitter la salle de jeu</button>
                 </div>
+
+                <div class="menu-content settings" data-menu="settings">
+
+
+                </div>
+            </div>
 
         </div> 
 

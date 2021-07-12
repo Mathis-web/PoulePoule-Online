@@ -6,7 +6,6 @@ const game = {
     tableGame: document.querySelector('.tableGame'),
 
     initGameRoom: (info) => {
-        console.log('yoo ça initialise lààààà')
         const player = document.createElement('div');
         const username = document.createElement('span');
         username.textContent = info.name;
@@ -16,6 +15,21 @@ const game = {
         player.className = "player";
         player.appendChild(username);
         game.playersDiv.appendChild(player);
+    },
+
+    handleClickMenu(e) {
+        const element = e.target;
+        // add/remove active class on menu element
+        if (e.target.classList.contains('active')) return;
+        document.querySelector('.menu-container li.active').classList.remove('active');
+        element.classList.add('active');
+
+        // add/remove active class on menu-content element and change its display (flex or none) 
+        const menuContent = document.querySelector(`.menu-content[data-menu="${element.getAttribute('data-menu')}"]`);
+        document.querySelector('.menu-content.active').style.display="none";
+        document.querySelector('.menu-content.active').classList.remove('active');
+        menuContent.classList.add('active');
+        document.querySelector('.menu-content.active').style.display="flex";
     },
 
     displayGameInfo: (gameInfo) => {
