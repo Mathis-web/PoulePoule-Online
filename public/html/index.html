@@ -70,25 +70,30 @@
                             <div class="score-message"></div>
                         </div>
                     </div>
-                
-                    <div class="change-difficulty" style="display: none">
-                        <h2>Modifier la difficulté</h2>
-                        <form id="change-difficulty-form">
-                            <select name="difficulty" class="select-difficulty">
-                                <option value="" class="select-difficulty-option">-- Choisissez une difficulté --</option>
-                                <option value="level1" class="select-difficulty-option">Niveau 1 (Facile)</option>
-                                <option value="level2" class="select-difficulty-option">Niveau 2 (Moyen)</option>
-                                <option value="level3" class="select-difficulty-option">Niveau 3 (Difficile)</option>
-                            </select>
-                            <button type="submit">Modifier</button>
-                        </form>
-                    </div>
 
                     <button id="leave-room-btn" type="button">Quitter la salle de jeu</button>
                 </div>
 
                 <div class="menu-content settings" data-menu="settings">
 
+                    <form class="game-configuration">
+                        <div class="cards-settings">
+
+                        </div>
+
+                        <div class="change-difficulty" style="display: none">
+                            <h2>Modifier la difficulté</h2>
+                            <div id="change-difficulty-form">
+                                <select name="difficulty" class="select-difficulty">
+                                    <option value="" class="select-difficulty-option">-- Choisissez une difficulté --</option>
+                                    <option value="level1" class="select-difficulty-option">Niveau 1 (Facile)</option>
+                                    <option value="level2" class="select-difficulty-option">Niveau 2 (Moyen)</option>
+                                    <option value="level3" class="select-difficulty-option">Niveau 3 (Difficile)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit">Appliquer les modifications</button>
+                    </form>
 
                 </div>
             </div>

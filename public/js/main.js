@@ -9,6 +9,7 @@ const main = {
         main.handleEventListeners();
         main.handleSocketEventListeners();
         main.preloadImages();
+        main.addCardsSettingsInDOM();
     },
 
     handleSocketEventListeners: () => {
@@ -38,7 +39,8 @@ const main = {
         const changeDifficultyForm = document.getElementById('change-difficulty-form');
         const menuElements = document.querySelectorAll('.menu-container ul li').forEach(element => {
             element.addEventListener('click', game.handleClickMenu)
-        })
+        });
+        const gameSettingsForm = document.querySelector('.game-configuration');
 
         createGameBtn.addEventListener('click', main.createGame);
         joinGameBtn.addEventListener('click', main.joinGame);
@@ -46,6 +48,7 @@ const main = {
         stopBtn.addEventListener('click', main.stopPlayer);
         leaveRoomBtn.addEventListener('click', main.leaveRoom);
         changeDifficultyForm.addEventListener('submit', main.handleChangeDifficulty);
+        gameSettingsForm.addEventListener('submit', main.changeGameConfiguration)
     },
 
     joinGame: () => {
@@ -103,12 +106,23 @@ const main = {
             return;
         }
         main.socket.emit('changeDifficulty', level);
-        alert('La difficulé a bien été modifiée.');
+        alert('La difficulté a bien été modifiée.');
     },
 
     leaveRoom() {
         alert("Une erreur s'est produite, vous allez être redirigé vers la page d'accueil.");
         location.reload();
+    },
+
+    changeGameConfiguration(e) {
+        e.preventDefault();
+        let gameConfiguration = {
+            cards: [],
+            difficulty: e.target.elements.difficulty.value
+        }
+        e.target.elements.cards.forEach((card, index) => {
+            if (card.checked) gameConfiguration.cards.push(index)
+        })
     },
 
     preloadImages() {
@@ -121,6 +135,19 @@ const main = {
         imgOeuf.src = "/images/2.png";
 
         game.arrayCards = [imgPoule, imgRenard, imgOeuf];
+    },
+
+    addCardsSettingsInDOM() {
+        const cardsSettingsContainer = document.querySelector('.cards-settings');
+        game.arrayCards.forEach((card, index) => {
+            const cardInput = `
+                <input type="checkbox" id="${index}" ${index === 0 || index === 1 || index === 2 ? 'checked disabled' : "" } name="cards" value="${index}">
+                <label for="${index}">
+                    <img src="${card.src}">
+                </label>
+            `;
+            cardsSettingsContainer.innerHTML += cardInput;
+        })
     },
 
 }
