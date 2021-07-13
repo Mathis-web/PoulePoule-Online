@@ -3,7 +3,7 @@ const game = {
     start: (gameRoom) => {
         // 0 = chicken, 1 = fox, 2 = egg
         gameRoom.gameState = {
-            lotCarte: [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+            lotCarte: [0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
             listeCartePose: [],
             numberPlayersStoped: 0,
             speed: game.choiceSpeed(gameRoom.difficulty)
