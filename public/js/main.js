@@ -36,7 +36,6 @@ const main = {
         const startGameBtn = document.getElementById('start-game-btn');
         const stopBtn = document.getElementById('stop-btn');
         const leaveRoomBtn = document.getElementById('leave-room-btn');
-        const changeDifficultyForm = document.getElementById('change-difficulty-form');
         const menuElements = document.querySelectorAll('.menu-container ul li').forEach(element => {
             element.addEventListener('click', game.handleClickMenu)
         });
@@ -47,7 +46,6 @@ const main = {
         startGameBtn.addEventListener('click', main.startTimer);
         stopBtn.addEventListener('click', main.stopPlayer);
         leaveRoomBtn.addEventListener('click', main.leaveRoom);
-        changeDifficultyForm.addEventListener('submit', main.handleChangeDifficulty);
         gameSettingsForm.addEventListener('submit', main.changeGameConfiguration)
     },
 
@@ -98,17 +96,6 @@ const main = {
         main.socket.emit('stopBtnPressed', stopInfo);
     },
 
-    handleChangeDifficulty: (e) => {
-        e.preventDefault();
-        const level = e.target.elements.difficulty.value;
-        if(level === "") {
-            alert('Choisissez une difficulté.');
-            return;
-        }
-        main.socket.emit('changeDifficulty', level);
-        alert('La difficulté a bien été modifiée.');
-    },
-
     leaveRoom() {
         alert("Une erreur s'est produite, vous allez être redirigé vers la page d'accueil.");
         location.reload();
@@ -122,19 +109,35 @@ const main = {
         }
         e.target.elements.cards.forEach((card, index) => {
             if (card.checked) gameConfiguration.cards.push(index)
-        })
+        });
+        console.log(gameConfiguration)
+        main.socket.emit('changeGameConfiguration', gameConfiguration)
     },
 
     preloadImages() {
         const imgPoule = document.createElement('img');
         const imgRenard = document.createElement('img');
         const imgOeuf = document.createElement('img');
+        const imgChien = document.createElement('img');
+        const imgCanard = document.createElement('img');
+        const imgRenardDeguise = document.createElement('img');
+        const imgOeufAutruche = document.createElement('img');
+        const imgVerDeTerre = document.createElement('img');
+        const imgFermier = document.createElement('img');
+        const imgCoq = document.createElement('img');
 
         imgPoule.src = "/images/0.png";
         imgRenard.src = "/images/1.png";
         imgOeuf.src = "/images/2.png";
+        imgChien.src = "/images/3.png";
+        imgCanard.src = "/images/4.png";
+        imgRenardDeguise.src = "/images/5.png";
+        imgOeufAutruche.src = "/images/6.png";
+        imgVerDeTerre.src = "/images/7.png";
+        imgFermier.src = "/images/8.png";
+        imgCoq.src = "/images/9.png";
 
-        game.arrayCards = [imgPoule, imgRenard, imgOeuf];
+        game.arrayCards = [imgPoule, imgRenard, imgOeuf, imgChien, imgCanard, imgRenardDeguise, imgOeufAutruche, imgVerDeTerre, imgFermier, imgCoq];
     },
 
     addCardsSettingsInDOM() {

@@ -10,7 +10,10 @@ const handleGameRooms = {
         // put game and user information into gameRoom object
         gameRooms[roomCode] = {
             code: roomCode,
-            gameState: null,
+            gameState: {
+                // basic configuration of the game
+                choosenCards: [0, 1, 2]
+            },
             clients: [],
             difficulty: difficulty
         };
@@ -106,9 +109,10 @@ const handleGameRooms = {
        return gameRoom;
     },
 
-    changeDifficulty(roomCode, level) {
+    handleGameConfiguration(roomCode, configuration) {
         const gameRoom = gameRooms[roomCode];
-        gameRoom.difficulty = level;
+        gameRoom.gameState.choosenCards = configuration.cards;
+        gameRoom.difficulty = configuration.difficulty;
     }
 };
 

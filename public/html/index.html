@@ -55,7 +55,7 @@
                 <nav class="menu-container">
                     <ul class="menu">
                         <li class="active" data-menu="game">JEU</li>
-                        <li data-menu="settings">PERSONNALISATIONS</li>
+                        <li data-menu="settings">CONFIGURATION</li>
                     </ul>
                 </nav>
 
@@ -77,22 +77,20 @@
                 <div class="menu-content settings" data-menu="settings">
 
                     <form class="game-configuration">
+                        <p>Choisissez les cartes avec lesquelles vous voulez jouer. Le renard, la poule et l'oeuf sont automatiquement intégrés. Appuyez sur le bouton appliquer pour enregistrer vos modifications.</p>
                         <div class="cards-settings">
 
                         </div>
 
-                        <div class="change-difficulty" style="display: none">
-                            <h2>Modifier la difficulté</h2>
-                            <div id="change-difficulty-form">
-                                <select name="difficulty" class="select-difficulty">
-                                    <option value="" class="select-difficulty-option">-- Choisissez une difficulté --</option>
-                                    <option value="level1" class="select-difficulty-option">Niveau 1 (Facile)</option>
-                                    <option value="level2" class="select-difficulty-option">Niveau 2 (Moyen)</option>
-                                    <option value="level3" class="select-difficulty-option">Niveau 3 (Difficile)</option>
-                                </select>
-                            </div>
+                        <div class="change-difficulty">
+                            <h2>Modifier la vitesse</h2>
+                            <select name="difficulty" class="select-difficulty">
+                                <option value="level1" class="select-difficulty-option">Niveau 1 (Facile)</option>
+                                <option value="level2" class="select-difficulty-option">Niveau 2 (Moyen)</option>
+                                <option value="level3" class="select-difficulty-option">Niveau 3 (Difficile)</option>
+                            </select>
                         </div>
-                        <button type="submit">Appliquer les modifications</button>
+                        <button type="submit">Appliquer</button>
                     </form>
 
                 </div>

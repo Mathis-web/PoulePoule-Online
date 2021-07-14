@@ -58,12 +58,10 @@ const game = {
 
     displayHostElements: () => {
         game.startGameBtn.style.display = "block";
-        document.querySelector('.change-difficulty').style.display = "block";
     },
 
     hideHostElements: () => {
         game.startGameBtn.style.display = "none";
-        document.querySelector('.change-difficulty').style.display = "none";
     },
 
     displayNewCard(gameState) {

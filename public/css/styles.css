@@ -126,11 +126,12 @@ body{
 
 #gamepage .menu-container li {
     cursor: pointer;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 #gamepage .menu-container li.active {
-    color: white;
-    font-weight: bold;
+    color: #fbcfaf;
 }
 
 #gamepage .settings {
@@ -140,9 +141,10 @@ body{
 }
 
 #gamepage .settings .cards-settings img {
-    width: 100px;
+    width: 125px;
     cursor: pointer;
     box-sizing: border-box;
+    border-radius: 12px;
 }
 
 #gamepage .game{
@@ -168,9 +170,40 @@ body{
     display: none;
 }
 
-#gamepage .cards-settings input:checked + label img {
-    border: 2px black solid;
-    border-radius: 5px;
+#gamepage .cards-settings input:checked + label::after {
+    content: '';
+    position: absolute;
+    width: 100%; height:100%;
+    top:0; left:0;
+    opacity: 0;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+}
+
+#gamepage .cards-settings input + label::after {
+    content: '';
+    position: absolute;
+    width: 100%; height:98.7%;
+    top:0; left:0;
+    background:rgba(0,0,0,0.4);
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    border-radius: 12px;
+}
+
+.cards-settings {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: 2rem auto;
+}
+
+.cards-settings label {
+    display: inline-block;
+    margin: 1rem;
+    position: relative;
+    cursor: pointer;
 }
 
 #gamepage .players-container {
@@ -292,8 +325,22 @@ body{
     border-radius: 10px;
 }
 
+.game-configuration button {
+    display: block;
+    margin: 0 auto;
+}
+
+.game-configuration p {
+    font-size: 1.3rem;
+    width: 70%;
+    margin: 1.5rem auto;
+}
+
 .change-difficulty {
     margin-bottom: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .change-difficulty h2 {

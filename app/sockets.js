@@ -12,7 +12,7 @@ module.exports.listen = function(io) {
         socket.on('startTimer', startTimer);
         socket.on('disconnect', leaveRoom);
         socket.on('stopBtnPressed', handleStopGame);
-        socket.on('changeDifficulty', changeDifficulty);
+        socket.on('changeGameConfiguration', changeGameConfiguration);
    
         function createRoom(username, difficulty) {
             const hostPlayer = {
@@ -99,8 +99,8 @@ module.exports.listen = function(io) {
            
        }
     
-       function changeDifficulty(level) {
-            handleGameRooms.changeDifficulty(socket.gameCode, level)
+       function changeGameConfiguration(configuration) {
+            handleGameRooms.handleGameConfiguration(socket.gameCode, configuration);
        }
     
        
