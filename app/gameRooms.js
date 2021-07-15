@@ -68,15 +68,19 @@ const handleGameRooms = {
     },
 
     stopGame(roomCode, stopInfo, stopedPlayerId) {
+        const gameRoom = gameRooms[roomCode];
         let roomInfo = {
             isAllPlayersStoped: false,
             stopedPlayerScore: 0,
             clients: undefined,
             hostId: undefined,
+            hostElements: {
+                difficulty: gameRoom.difficulty,
+                cards: gameRoom.gameState.choosenCards
+            },
             winner: undefined
         }
 
-        const gameRoom = gameRooms[roomCode];
         gameRoom.gameState.numberPlayersStoped++;
 
         const listeCartePose = gameRoom.gameState.listeCartePose.slice(0, stopInfo.numberOfCardsPlayed);

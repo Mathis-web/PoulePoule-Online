@@ -24,7 +24,7 @@ module.exports.listen = function(io) {
             socket.username = username;
             socket.gameCode = gameRoom.code;
             socket.join(gameRoom.code);  // put the player in the room
-            socket.emit('init', {...hostPlayer, gameCode: gameRoom.code});
+            socket.emit('init', {...hostPlayer, gameRoom: gameRoom, difficulty: gameRoom.difficulty});
         }
     
         function joinRoom(info) {
@@ -55,9 +55,12 @@ module.exports.listen = function(io) {
             if(newRoomState) {
                 io.sockets.in(socket.gameCode).emit('gameInfo', {clients: newRoomState.gameRoom.clients, gameCode: socket.gameCode});
             }
-    
+            
             if (newRoomState && newRoomState.isHostGone) {
-                io.to(newRoomState.newHost.id).emit('host');
+                io.to(newRoomState.newHost.id).emit('host', {
+                    cards: newRoomState.gameRoom.gameState.choosenCards,
+                    difficulty: newRoomState.gameRoom.difficulty
+                });
             }
         }
     
@@ -76,7 +79,10 @@ module.exports.listen = function(io) {
                     gameCode: socket.gameCode
                 });
                 io.sockets.in(socket.gameCode).emit('stopGame', roomInfo.winner);
-                io.to(roomInfo.hostId).emit('host');
+                io.to(roomInfo.hostId).emit('host', {
+                    cards: roomInfo.hostElements.cards, 
+                    difficulty: roomInfo.hostElements.difficulty
+                });
             }
         }
     

@@ -119,6 +119,10 @@ body{
     padding: 20px 0;
 }
 
+.menu-container {
+    display: none;
+}
+
 #gamepage .menu {
     display: flex;
     justify-content: space-around;
@@ -135,7 +139,7 @@ body{
 }
 
 #gamepage .settings {
-    display:flex;
+    display: none;
     flex-direction: column;
     align-items: center;
 }

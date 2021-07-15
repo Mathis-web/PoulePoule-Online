@@ -10,8 +10,8 @@ const game = {
         const username = document.createElement('span');
         username.textContent = info.name;
         game.hostGameDiv.textContent = "Hôte de la salle: " + info.name;
-        game.gameCodeDiv.textContent = "Code de la salle: " + info.gameCode;
-        game.displayHostElements();
+        game.gameCodeDiv.textContent = "Code de la salle: " + info.gameRoom.code;
+        game.displayHostElements({cards: info.gameRoom.gameState.choosenCards, difficulty: info.gameRoom.difficulty});
         player.className = "player";
         player.appendChild(username);
         game.playersDiv.appendChild(player);
@@ -56,12 +56,22 @@ const game = {
         })
     },
 
-    displayHostElements: () => {
+    displayHostElements: (gameConfiguration) => {
         game.startGameBtn.style.display = "block";
+        document.querySelector('.change-difficulty .select-difficulty').value = gameConfiguration.difficulty;
+        document.querySelector('.menu-container').style.display = "block";
+
+        const cards = document.querySelectorAll('.cards-settings input');
+        cards.forEach(card => {
+            if(gameConfiguration.cards.includes(parseInt(card.value, 10))) {
+                card.checked = true;
+            }
+        })
     },
 
     hideHostElements: () => {
         game.startGameBtn.style.display = "none";
+        document.querySelector('.menu-container').style.display = "none";
     },
 
     displayNewCard(gameState) {
