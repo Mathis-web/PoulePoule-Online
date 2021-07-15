@@ -85,7 +85,6 @@ const main = {
         game.interval = setInterval(() => {
             if(gameState.listeCartePose.length === game.numberOfCardsPlayed) {
                 clearInterval(game.interval);
-                main.stopPlayer();
                 return;
             }
             if(game.tableGame.querySelector('#card')) {
@@ -97,6 +96,9 @@ const main = {
             // ex: cardNumber = 0, so arrayCards[0] corresponds to the chicken card 
             const newImg = game.arrayCards[cardNumber];
             newImg.id = 'card';
+            if(gameState.speed < 800) {
+                document.documentElement.style.setProperty('--animation-duration', '700ms');
+            }
             newImg.classList.add('carte_out');
             game.tableGame.appendChild(newImg);
             game.numberOfCardsPlayed++;

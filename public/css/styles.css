@@ -2,6 +2,10 @@
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
+:root {
+    --animation-duration: 800ms;
+}
+
 body{
     background-color: #be3231;
 }
@@ -383,7 +387,8 @@ body{
 
 
 .carte_out{
-    animation: transition-out cubic-bezier(0,.86,1,-0.02) 800ms;
+    animation: transition-out cubic-bezier(0,.86,1,-0.02);
+    animation-duration: var(--animation-duration);
     animation-fill-mode: forwards;
 }
 

@@ -77,28 +77,6 @@ const game = {
         document.querySelector('.menu-container').style.display = "none";
     },
 
-    displayNewCard(gameState) {
-        game.numberOfCardsPlayed = 0;
-        game.interval = setInterval(() => {
-            if(gameState.listeCartePose.length === game.numberOfCardsPlayed) {
-                clearInterval(game.interval);
-                return;
-            }
-            if(game.tableGame.querySelector('#card')) {
-                game.tableGame.removeChild(game.tableGame.querySelector('#card'));
-            }
-            // get the number of the card to display from the list in the gameState object
-            const cardNumber = gameState.listeCartePose[game.numberOfCardsPlayed]
-            // and get that card with the corresponding index in arrayCard
-            // ex: cardNumber = 0, so arrayCards[0] corresponds to the chicken card 
-            const newImg = game.arrayCards[cardNumber];
-            newImg.id = 'card';
-            newImg.classList.add('carte_out');
-            game.tableGame.appendChild(newImg);
-            game.numberOfCardsPlayed++;
-        }, gameState.speed);
-    },
-
     displayTimer(number) {
         game.hideResults();
         const count = document.querySelector('.count');
