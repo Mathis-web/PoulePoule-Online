@@ -53,7 +53,10 @@ module.exports.listen = function(io) {
             const newRoomState = handleGameRooms.leave(socket.gameCode, socket.id);
             
             if(newRoomState) {
-                io.sockets.in(socket.gameCode).emit('gameInfo', {clients: newRoomState.gameRoom.clients, gameCode: socket.gameCode});
+                io.sockets.in(socket.gameCode).emit('gameInfo', {
+                    clients: newRoomState.gameRoom.clients,
+                    gameCode: socket.gameCode
+                });
             }
             
             if (newRoomState && newRoomState.isHostGone) {
@@ -94,10 +97,9 @@ module.exports.listen = function(io) {
            const timerValue = () => {
                if (timer === 0)  {
                    clearInterval(interval);
-                   // this event is only emitted to the host
-                   socket.emit('endTimer');
+                   startGame();
                }
-               io.sockets.in(socket.gameCode).emit('startTimer', timer);
+               io.sockets.in(socket.gameCode).emit('displayTimer', timer);
                timer--;
            }
            timerValue();

@@ -2,13 +2,10 @@ const game = {
 
     start: (gameRoom) => {
         // 0 = chicken, 1 = fox, 2 = egg
-        gameRoom.gameState = {
-            // list of cards that are played in the game. ex: [1,2,3,5,8] and generate a list from those cards
-            lotCarte: game.generateLotCarte(gameRoom.gameState),
-            listeCartePose: [],
-            numberPlayersStoped: 0,
-            speed: game.choiceSpeed(gameRoom.difficulty)
-        }
+        gameRoom.gameState.lotCarte = game.generateLotCarte(gameRoom.gameState);
+        gameRoom.gameState.listeCartePose = [];
+        gameRoom.gameState.speed = game.choiceSpeed(gameRoom.difficulty);
+        gameRoom.gameState.numberPlayersStoped = 0;
         game.generateCardsList(gameRoom.gameState)
     },
 

@@ -12,7 +12,11 @@ const handleGameRooms = {
             code: roomCode,
             gameState: {
                 // basic configuration of the game
-                choosenCards: [0, 1, 2]
+                choosenCards: [0, 1, 2],
+                lotCarte: [],
+                listeCartePose: [],
+                numberPlayersStoped: 0,
+                speed: undefined
             },
             clients: [],
             difficulty: difficulty
@@ -80,7 +84,6 @@ const handleGameRooms = {
             },
             winner: undefined
         }
-
         gameRoom.gameState.numberPlayersStoped++;
 
         const listeCartePose = gameRoom.gameState.listeCartePose.slice(0, stopInfo.numberOfCardsPlayed);

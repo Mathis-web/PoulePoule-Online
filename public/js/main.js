@@ -15,11 +15,9 @@ const main = {
     handleSocketEventListeners: () => {
         main.socket.on('init', game.initGameRoom);
         main.socket.on('gameInfo', game.displayGameInfo);
-        main.socket.on('newCard', game.displayNewCard);
         main.socket.on('host', game.displayHostElements);
-        main.socket.on('startTimer', game.startTimer);
-        main.socket.on('startGame', game.displayNewCard);
-        main.socket.on('endTimer', main.startGame);
+        main.socket.on('displayTimer', game.displayTimer);
+        main.socket.on('startGame', main.displayNewCard);
         main.socket.on('stopGame', game.stopGame);
         main.socket.on('score', game.displayScore);
         main.socket.on('disconnect', main.leaveRoom);
@@ -43,7 +41,7 @@ const main = {
 
         createGameBtn.addEventListener('click', main.createGame);
         joinGameBtn.addEventListener('click', main.joinGame);
-        startGameBtn.addEventListener('click', main.startTimer);
+        startGameBtn.addEventListener('click', main.startGame);
         stopBtn.addEventListener('click', main.stopPlayer);
         leaveRoomBtn.addEventListener('click', main.leaveRoom);
         gameSettingsForm.addEventListener('submit', main.changeGameConfiguration)
@@ -77,13 +75,32 @@ const main = {
         main.socket.emit('newGame', main.usernameInput.value, main.difficultySelection.value);
     },
 
-    startTimer: () => {
+    startGame: () => {
         game.hideHostElements();
         main.socket.emit('startTimer');
     },
 
-    startGame() {
-        main.socket.emit('startGame');
+    displayNewCard(gameState) {
+        game.numberOfCardsPlayed = 0;
+        game.interval = setInterval(() => {
+            if(gameState.listeCartePose.length === game.numberOfCardsPlayed) {
+                clearInterval(game.interval);
+                main.stopPlayer();
+                return;
+            }
+            if(game.tableGame.querySelector('#card')) {
+                game.tableGame.removeChild(game.tableGame.querySelector('#card'));
+            }
+            // get the number of the card to display from the list in the gameState object
+            const cardNumber = gameState.listeCartePose[game.numberOfCardsPlayed]
+            // and get that card with the corresponding index in arrayCard
+            // ex: cardNumber = 0, so arrayCards[0] corresponds to the chicken card 
+            const newImg = game.arrayCards[cardNumber];
+            newImg.id = 'card';
+            newImg.classList.add('carte_out');
+            game.tableGame.appendChild(newImg);
+            game.numberOfCardsPlayed++;
+        }, gameState.speed);
     },
 
     stopPlayer: () => {
@@ -110,7 +127,6 @@ const main = {
         e.target.elements.cards.forEach((card, index) => {
             if (card.checked) gameConfiguration.cards.push(index)
         });
-        console.log(gameConfiguration)
         main.socket.emit('changeGameConfiguration', gameConfiguration)
     },
 

@@ -11,7 +11,10 @@ const game = {
         username.textContent = info.name;
         game.hostGameDiv.textContent = "Hôte de la salle: " + info.name;
         game.gameCodeDiv.textContent = "Code de la salle: " + info.gameRoom.code;
-        game.displayHostElements({cards: info.gameRoom.gameState.choosenCards, difficulty: info.gameRoom.difficulty});
+        game.displayHostElements({
+            cards: info.gameRoom.gameState.choosenCards,
+            difficulty: info.gameRoom.difficulty
+        });
         player.className = "player";
         player.appendChild(username);
         game.playersDiv.appendChild(player);
@@ -78,7 +81,8 @@ const game = {
         game.numberOfCardsPlayed = 0;
         game.interval = setInterval(() => {
             if(gameState.listeCartePose.length === game.numberOfCardsPlayed) {
-                clearInterval(interval);
+                clearInterval(game.interval);
+                return;
             }
             if(game.tableGame.querySelector('#card')) {
                 game.tableGame.removeChild(game.tableGame.querySelector('#card'));
@@ -95,7 +99,7 @@ const game = {
         }, gameState.speed);
     },
 
-    startTimer(number) {
+    displayTimer(number) {
         game.hideResults();
         const count = document.querySelector('.count');
         count.style.opacity = 0.7;
