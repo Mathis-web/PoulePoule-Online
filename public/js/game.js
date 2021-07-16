@@ -101,6 +101,10 @@ const game = {
         document.querySelector('.results').style.opacity = 0;
     },
 
+    canardIsHere() {
+
+    },
+
     endTimer() {
         const count = document.querySelector('.count');
         count.style.opacity = 0;

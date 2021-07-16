@@ -1,7 +1,6 @@
 const game = {
 
     start: (gameRoom) => {
-        // 0 = chicken, 1 = fox, 2 = egg
         gameRoom.gameState.lotCarte = game.generateLotCarte(gameRoom.gameState);
         gameRoom.gameState.listeCartePose = [];
         gameRoom.gameState.speed = game.choiceSpeed(gameRoom.difficulty);
@@ -42,6 +41,13 @@ const game = {
         if (choosenCards.includes(8)) lotCarte.push(8, 2, 2, 2, 2);
         if (choosenCards.includes(9)) lotCarte.push(9);
 
+        for(let i = lotCarte.length - 1; i > 0; i--){
+            const j = Math.floor(Math.random() * i);
+            const temp = lotCarte[i];
+            lotCarte[i] = lotCarte[j];
+            lotCarte[j] = temp;
+        }
+
         return lotCarte;
     },
 
@@ -56,32 +62,55 @@ const game = {
         }
     },
 
+    // calculScore(listeCartePose) {
+    //     let score = 0;
+    //     const oeufDispo = [];
+    //     const oeufCouve = [];
+    //     for(let i = 0 ; i < listeCartePose.length; i++){
+    //         if(listeCartePose[i] === 0){
+    //             if(oeufDispo.length > 0 && score > 0){
+    //                 oeufCouve.push('X');
+    //                 score--;
+    //             }
+    //             else if(oeufDispo.length > 0){
+    //                 oeufCouve.push('X');
+    //             }
+    //         }
+    //         else if(listeCartePose[i] === 1){
+    //             if(oeufCouve.length > 0){
+    //                 oeufCouve.splice(0,1);
+    //                 score++;
+    //             }
+    //         }
+    //         else if(listeCartePose[i] === 2){
+    //             oeufDispo.push('X');
+    //             score++
+    //         }
+    //     }
+    //     return score;
+    // },
+
     calculScore(listeCartePose) {
-        let score = 0;
         const oeufDispo = [];
-        const oeufCouve = [];
+        const pouleCouve = [];
         for(let i = 0 ; i < listeCartePose.length; i++){
             if(listeCartePose[i] === 0){
-                if(oeufDispo.length > 0 && score > 0){
-                    oeufCouve.push('X');
-                    score--;
-                }
-                else if(oeufDispo.length > 0){
-                    oeufCouve.push('X');
+                if(oeufDispo.length > 0){
+                    pouleCouve.push('X');
+                    oeufDispo.splice(0, 1);
                 }
             }
             else if(listeCartePose[i] === 1){
-                if(oeufCouve.length > 0){
-                    oeufCouve.splice(0,1);
-                    score++;
+                if(pouleCouve.length > 0){
+                    pouleCouve.splice(0,1);
+                    oeufDispo.push('X');
                 }
             }
             else if(listeCartePose[i] === 2){
                 oeufDispo.push('X');
-                score++
             }
         }
-        return score;
+        return oeufDispo.length;
     },
 
     generateRandomNumber: (min, max) => {

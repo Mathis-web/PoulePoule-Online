@@ -81,7 +81,6 @@ const main = {
     },
 
     displayNewCard(gameState) {
-        console.log(gameState)
         game.numberOfCardsPlayed = 0;
         game.interval = setInterval(() => {
             if(gameState.listeCartePose.length === game.numberOfCardsPlayed) {
@@ -94,6 +93,7 @@ const main = {
             }
             // get the number of the card to display from the list in the gameState object
             const cardNumber = gameState.listeCartePose[game.numberOfCardsPlayed]
+            if(cardNumber === 4) game.canardIsHere();
             // and get that card with the corresponding index in arrayCard
             // ex: cardNumber = 0, so arrayCards[0] corresponds to the chicken card 
             if(gameState.speed < 800) {
