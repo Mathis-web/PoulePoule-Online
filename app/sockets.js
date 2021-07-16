@@ -64,6 +64,7 @@ module.exports.listen = function(io) {
             }
             
             if (newRoomState && newRoomState.isHostGone) {
+                if(newRoomState.gameRoom.isGameActive) return;
                 io.to(newRoomState.newHost.id).emit('host', {
                     cards: newRoomState.gameRoom.gameState.choosenCards,
                     difficulty: newRoomState.gameRoom.difficulty
@@ -86,10 +87,12 @@ module.exports.listen = function(io) {
                     gameCode: socket.gameCode
                 });
                 io.sockets.in(socket.gameCode).emit('stopGame', roomInfo.winner);
-                io.to(roomInfo.hostId).emit('host', {
-                    cards: roomInfo.hostElements.cards, 
-                    difficulty: roomInfo.hostElements.difficulty
-                });
+                setTimeout(() => {
+                    io.to(roomInfo.hostId).emit('host', {
+                        cards: roomInfo.hostElements.cards, 
+                        difficulty: roomInfo.hostElements.difficulty
+                    });
+                }, 3000)
             }
         }
     

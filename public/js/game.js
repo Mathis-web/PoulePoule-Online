@@ -4,6 +4,7 @@ const game = {
     hostGameDiv: document.getElementById('host-game-div'),
     startGameBtn: document.getElementById('start-game-btn'),
     tableGame: document.querySelector('.tableGame'),
+    isStopBtnAlreadyPressed: false,
 
     initGameRoom: (info) => {
         const player = document.createElement('div');
@@ -119,6 +120,7 @@ const game = {
 
     stopGame(winner) {
         // game.tableGame.style.opacity = '0.5'
+        game.isStopBtnAlreadyPressed = false;
         game.tableGame.removeChild(game.tableGame.querySelector('#card'));
         clearInterval(game.interval);
         const resultsDiv = document.querySelector('.results');

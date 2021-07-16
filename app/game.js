@@ -6,7 +6,7 @@ const game = {
         gameRoom.gameState.listeCartePose = [];
         gameRoom.gameState.speed = game.choiceSpeed(gameRoom.difficulty);
         gameRoom.gameState.numberPlayersStoped = 0;
-        game.generateCardsList(gameRoom.gameState)
+        game.generateCardsList(gameRoom)
     },
 
     choiceSpeed(difficulty){
@@ -45,7 +45,8 @@ const game = {
         return lotCarte;
     },
 
-    generateCardsList(gameState) {
+    generateCardsList(gameRoom) {
+        const gameState = gameRoom.gameState;
         const arrayCardsLength = gameState.lotCarte.length;
         for(let i = 0; i < arrayCardsLength; i++) {
             const randomNumber = game.generateRandomNumber(0, gameState.lotCarte.length);

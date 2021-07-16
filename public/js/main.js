@@ -81,10 +81,12 @@ const main = {
     },
 
     displayNewCard(gameState) {
+        console.log(gameState)
         game.numberOfCardsPlayed = 0;
         game.interval = setInterval(() => {
             if(gameState.listeCartePose.length === game.numberOfCardsPlayed) {
                 clearInterval(game.interval);
+                main.stopPlayer();
                 return;
             }
             if(game.tableGame.querySelector('#card')) {
@@ -106,6 +108,10 @@ const main = {
     },
 
     stopPlayer: () => {
+        // this function could be executed twice, when you click on stopBtn or when all cards have been played
+        // we have to have to make sure we only execute it once per player
+        if(game.isStopBtnAlreadyPressed) return;
+        game.isStopBtnAlreadyPressed = true;
         document.getElementById('stop-btn').style.display = "none";
         const chronometerValue = game.endChronometer();
         const stopInfo = {
