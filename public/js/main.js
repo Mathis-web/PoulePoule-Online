@@ -94,11 +94,11 @@ const main = {
             const cardNumber = gameState.listeCartePose[game.numberOfCardsPlayed]
             // and get that card with the corresponding index in arrayCard
             // ex: cardNumber = 0, so arrayCards[0] corresponds to the chicken card 
-            const newImg = game.arrayCards[cardNumber];
-            newImg.id = 'card';
             if(gameState.speed < 800) {
                 document.documentElement.style.setProperty('--animation-duration', '700ms');
             }
+            const newImg = game.arrayCards[cardNumber];
+            newImg.id = 'card';
             newImg.classList.add('carte_out');
             game.tableGame.appendChild(newImg);
             game.numberOfCardsPlayed++;

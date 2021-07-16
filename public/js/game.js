@@ -83,9 +83,12 @@ const game = {
         count.style.opacity = 0.7;
         if (number === 0) {
             game.endTimer();
+            game.tableGame.removeChild(game.tableGame.querySelector('.count-number'));
             return;
         }
-        game.tableGame.removeChild(game.tableGame.querySelector('.count-number'));
+        if (game.tableGame.querySelector('.count-number')) {
+            game.tableGame.removeChild(game.tableGame.querySelector('.count-number'));
+        };
         const div = document.createElement('div');
         div.textContent = number;
         div.className = "count-number";
@@ -116,6 +119,7 @@ const game = {
 
     stopGame(winner) {
         // game.tableGame.style.opacity = '0.5'
+        game.tableGame.removeChild(game.tableGame.querySelector('#card'));
         clearInterval(game.interval);
         const resultsDiv = document.querySelector('.results');
         game.tableGame.classList.add('omelette');

@@ -10,6 +10,7 @@ const handleGameRooms = {
         // put game and user information into gameRoom object
         gameRooms[roomCode] = {
             code: roomCode,
+            isGameActive: false,
             gameState: {
                 // basic configuration of the game
                 choosenCards: [0, 1, 2],
@@ -67,6 +68,7 @@ const handleGameRooms = {
 
     startGame(roomCode) {
         const gameRoom = gameRooms[roomCode];
+        gameRoom.isGameActive = true;
         game.start(gameRoom);
         return gameRoom.gameState;
     },
@@ -100,6 +102,7 @@ const handleGameRooms = {
             roomInfo.winner = winner;
             roomInfo.clients = gameRoom.clients;
             roomInfo.hostId = gameRoom.clients[0].id;
+            gameRoom.isGameActive = false;
         }
 
         return roomInfo;
@@ -108,6 +111,7 @@ const handleGameRooms = {
     startTimer(roomCode) {
         // reset players informations
         const gameRoom = gameRooms[roomCode];
+        gameRoom.isGameActive = true;
         gameRoom.clients.forEach(player => {
            player.chronometerValue = null;
            player.score = 0;

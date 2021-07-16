@@ -33,6 +33,10 @@ module.exports.listen = function(io) {
                socket.emit('errorJoinGame', 'Cette salle de jeu n\'existe pas.');
                return;
             };
+            if(gameRoom.isGameActive) {
+                socket.emit('errorJoinGame', 'Les joueurs ont déjà commencer à jouer. Attendez la fin avant de rejoindre.');
+                return;
+            }
             const guestPlayer = {
                 id: socket.id,
                 name: info.username,
