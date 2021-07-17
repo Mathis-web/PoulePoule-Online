@@ -345,13 +345,8 @@ body{
 }
 
 .tableGame .canard-container img {
-    height: 70%;
+    height: 60%;
     width: auto;
-}
-
-.game-configuration button {
-    display: block;
-    margin: 0 auto;
 }
 
 .game-configuration p {

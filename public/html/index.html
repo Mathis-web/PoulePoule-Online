@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="#">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js" integrity="sha512-eVL5Lb9al9FzgR63gDs1MxcDS2wFu3loYAgjIH0+Hg38tCS8Ag62dwKyH+wzDb+QauDpEZjXbMn11blw8cbTJQ==" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -69,7 +70,9 @@
                             <div class="winner-message"></div>
                             <div class="score-message"></div>
                         </div>
-                        <div class="canard-container"></div>
+                        <div class="canard-container">
+                            <img src="/images/canard1.png" alt="">
+                        </div>
                     </div>
 
                     <button id="leave-room-btn" type="button">Quitter la salle de jeu</button>
@@ -78,7 +81,7 @@
                 <div class="menu-content settings" data-menu="settings">
 
                     <form class="game-configuration">
-                        <p>Choisissez les cartes avec lesquelles vous voulez jouer. Le renard, la poule et l'oeuf sont automatiquement intégrés. Appuyez sur le bouton appliquer pour enregistrer vos modifications.</p>
+                        <p>Cliquez sur une carte pour ajouter/enlever cette carte dans la partie, et jouez avec la vitesse que vous voulez. Le renard, la poule et l'oeuf sont automatiquement intégrés.</p>
                         <div class="cards-settings">
 
                         </div>
@@ -91,7 +94,6 @@
                                 <option value="level3" class="select-difficulty-option">Niveau 3 (Difficile)</option>
                             </select>
                         </div>
-                        <button type="submit">Appliquer</button>
                     </form>
 
                 </div>

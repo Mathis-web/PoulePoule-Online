@@ -44,7 +44,7 @@ const main = {
         startGameBtn.addEventListener('click', main.startGame);
         stopBtn.addEventListener('click', main.stopPlayer);
         leaveRoomBtn.addEventListener('click', main.leaveRoom);
-        gameSettingsForm.addEventListener('submit', main.changeGameConfiguration)
+        gameSettingsForm.addEventListener('change', main.changeGameConfiguration)
     },
 
     joinGame: () => {
@@ -135,14 +135,15 @@ const main = {
         if(isLeaving) location.reload();
     },
 
-    changeGameConfiguration(e) {
-        e.preventDefault();
+    changeGameConfiguration() {
+        const cards = document.querySelectorAll('.cards-settings input:checked')
+        const difficulty = document.querySelector('.change-difficulty .select-difficulty');
         let gameConfiguration = {
             cards: [],
-            difficulty: e.target.elements.difficulty.value
+            difficulty: difficulty.value
         }
-        e.target.elements.cards.forEach((card, index) => {
-            if (card.checked) gameConfiguration.cards.push(index)
+        cards.forEach((card) => {
+            if (card.checked) gameConfiguration.cards.push(parseInt(card.value, 10))
         });
         main.socket.emit('changeGameConfiguration', gameConfiguration)
     },
@@ -159,9 +160,10 @@ const main = {
         const imgFermier = document.createElement('img');
         const imgCoq = document.createElement('img');
 
-        const imgCanardScreamer = document.createElement('img');
-        imgCanardScreamer.src = '/images/canard1.png';
-        game.imgCanardScreamer = imgCanardScreamer;
+        const canardSound = document.getElementById('audio-canard');
+        canardSound.addEventListener('canplaythrough', event => {
+            game.canardSound = canardSound;
+        })
 
         imgPoule.src = "/images/0.png";
         imgRenard.src = "/images/1.png";

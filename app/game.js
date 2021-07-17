@@ -5,7 +5,7 @@ const game = {
         gameRoom.gameState.listeCartePose = [];
         gameRoom.gameState.speed = game.choiceSpeed(gameRoom.difficulty);
         gameRoom.gameState.numberPlayersStoped = 0;
-        game.generateCardsList(gameRoom)
+        game.generateCardsList(gameRoom);
     },
 
     choiceSpeed(difficulty){

@@ -102,18 +102,16 @@ const game = {
     },
 
     canardIsHere(numberCanardAppearance) {
-        const canardContainer = document.querySelector('.tableGame .canard-container');
-        canardContainer.appendChild(game.imgCanardScreamer);
-        canardContainer.style.opacity = 1;
-        const canardSound = document.getElementById('audio-canard');
-
         const removeCanardContainer = () => {
             canardContainer.style.opacity = 0;
-            canardContainer.removeChild(game.imgCanardScreamer);
+            imgCanardScreamer.style.transform = "scaleX(1)";
+            imgCanardScreamer.style.height = "60%";
         }
+        const canardContainer = document.querySelector('.tableGame .canard-container');
+        const imgCanardScreamer = document.querySelector('.canard-container img');
+        canardContainer.style.opacity = 1;
 
-        canardSound.play();
-        canardSound.currentTime = 0;
+        game.canardSound.play();
         if(numberCanardAppearance === 1) {
             setTimeout(() => {
                 removeCanardContainer();
@@ -121,8 +119,9 @@ const game = {
         }
         else if (numberCanardAppearance === 2) {
             setTimeout(() => {
-                game.imgCanardScreamer.style.transform = "scaleX(-1)";
-                canardSound.play();
+                imgCanardScreamer.style.height = "80%";
+                imgCanardScreamer.style.transform = "scaleX(-1)";
+                game.canardSound.play();
                 setTimeout(() => {
                     removeCanardContainer();
                 }, 300)
