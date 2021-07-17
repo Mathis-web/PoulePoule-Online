@@ -111,7 +111,12 @@ const game = {
         const imgCanardScreamer = document.querySelector('.canard-container img');
         canardContainer.style.opacity = 1;
 
-        game.canardSound.play();
+        const playCanard = () => {
+            game.canardSound.play();
+            game.canardSound.currentTime = 0;
+        }
+
+        playCanard();
         if(numberCanardAppearance === 1) {
             setTimeout(() => {
                 removeCanardContainer();
@@ -121,7 +126,7 @@ const game = {
             setTimeout(() => {
                 imgCanardScreamer.style.height = "80%";
                 imgCanardScreamer.style.transform = "scaleX(-1)";
-                game.canardSound.play();
+                playCanard();
                 setTimeout(() => {
                     removeCanardContainer();
                 }, 300)
