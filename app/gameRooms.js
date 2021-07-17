@@ -11,6 +11,8 @@ const handleGameRooms = {
         gameRooms[roomCode] = {
             code: roomCode,
             isGameActive: false,
+            isCoqHere: false,
+            oeufDispoAfterCoq: undefined,
             gameState: {
                 // basic configuration of the game
                 choosenCards: [0, 1, 2],
@@ -69,35 +71,56 @@ const handleGameRooms = {
     startGame(roomCode) {
         const gameRoom = gameRooms[roomCode];
         gameRoom.isGameActive = true;
+        handleGameRooms.resetGameInformations(gameRoom);
         game.start(gameRoom);
         return gameRoom.gameState;
     },
 
     stopGame(roomCode, stopInfo, stopedPlayerId) {
         const gameRoom = gameRooms[roomCode];
+
         let roomInfo = {
             isAllPlayersStoped: false,
             stopedPlayerScore: 0,
+            isStopedPlayerBecauseOfCoq: false,
             clients: undefined,
             hostId: undefined,
             hostElements: {
                 difficulty: gameRoom.difficulty,
                 cards: gameRoom.gameState.choosenCards
             },
-            winner: undefined
+            winner: undefined,
+            isCoqHere: false
         }
         gameRoom.gameState.numberPlayersStoped++;
 
         const listeCartePose = gameRoom.gameState.listeCartePose.slice(0, stopInfo.numberOfCardsPlayed);
         const score = game.calculScore(listeCartePose);
         const player = gameRoom.clients.find(player => player.id === stopedPlayerId);
-        player.score = score;
+        player.oeufDispo = score;
         player.chronometerValue = stopInfo.chronometerValue;
         roomInfo.stopedPlayerScore = score;
+
+        // means that player stoped his game with the coq, so first we check if someone pressed stop and won before the coq appeared
+        // if not, we check the value of the player who stoped their cards list with the coq
+        if(stopInfo.isCoqHere) {
+            player.isCoqHere = true;
+            player.oeufDispo = undefined;
+            player.coqEggsNumber = stopInfo.numberOfEggs,
+            roomInfo.stopedPlayerScore = stopInfo.numberOfEggs;
+            roomInfo.isStopedPlayerBecauseOfCoq = true;
+            player.oeufDispoAfterCoq = score;
+            gameRoom.isCoqHere = true;
+            gameRoom.oeufDispoAfterCoq = score;
+        }
 
         // if all players pressed stop button, choose a winner
         if(gameRoom.gameState.numberPlayersStoped === gameRoom.clients.length) {
             const winner = game.chooseWinner(gameRoom);
+            // if winner wins thanks to the coq
+            if(winner.isCoqHere) {
+                roomInfo.isCoqHere = true
+            }
             roomInfo.isAllPlayersStoped = true;
             roomInfo.winner = winner;
             roomInfo.clients = gameRoom.clients;
@@ -112,19 +135,34 @@ const handleGameRooms = {
         // reset players informations
         const gameRoom = gameRooms[roomCode];
         gameRoom.isGameActive = true;
-        gameRoom.clients.forEach(player => {
-           player.chronometerValue = null;
-           player.score = 0;
-       });
+        handleGameRooms.resetPlayersInformations(gameRoom.clients);
 
        return gameRoom;
+    },
+
+    resetPlayersInformations(players) {
+        players.forEach(player => {
+            player.chronometerValue = null;
+            player.oeufDispo = undefined;
+            player.isCoqHere = false;
+            player.coqEggsNumber = undefined;
+            player.oeufDispoAfterCoq = undefined;
+        });
+    },
+
+    resetGameInformations(gameRoom) {
+        gameRoom.isCoqHere = false;
+        gameRoom.oeufDispoAfterCoq = undefined;
+        gameRoom.gameState.numberPlayersStoped = 0;
+        gameRoom.gameState.listeCartePose = [];
     },
 
     handleGameConfiguration(roomCode, configuration) {
         const gameRoom = gameRooms[roomCode];
         gameRoom.gameState.choosenCards = configuration.cards;
         gameRoom.difficulty = configuration.difficulty;
-    }
+    },
+
 };
 
 module.exports = handleGameRooms;

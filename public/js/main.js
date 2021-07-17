@@ -38,13 +38,15 @@ const main = {
             element.addEventListener('click', game.handleClickMenu)
         });
         const gameSettingsForm = document.querySelector('.game-configuration');
+        const coqForm = document.querySelector('.coq-container form');
 
         createGameBtn.addEventListener('click', main.createGame);
         joinGameBtn.addEventListener('click', main.joinGame);
         startGameBtn.addEventListener('click', main.startGame);
         stopBtn.addEventListener('click', main.stopPlayer);
         leaveRoomBtn.addEventListener('click', main.leaveRoom);
-        gameSettingsForm.addEventListener('change', main.changeGameConfiguration)
+        gameSettingsForm.addEventListener('change', main.changeGameConfiguration);
+        coqForm.addEventListener('submit', main.submitCoqForm)
     },
 
     joinGame: () => {
@@ -83,6 +85,10 @@ const main = {
     displayNewCard(gameState) {
         game.numberOfCardsPlayed = 0;
         let numberCanardAppearance = 0;
+        if(gameState.speed < 800) {
+            document.documentElement.style.setProperty('--animation-duration', '700ms');
+        }
+
         game.interval = setInterval(() => {
             if(gameState.listeCartePose.length === game.numberOfCardsPlayed) {
                 clearInterval(game.interval);
@@ -100,15 +106,37 @@ const main = {
             };
             // and get that card with the corresponding index in arrayCard
             // ex: cardNumber = 0, so arrayCards[0] corresponds to the chicken card 
-            if(gameState.speed < 800) {
-                document.documentElement.style.setProperty('--animation-duration', '700ms');
-            }
             const newImg = game.arrayCards[cardNumber];
             newImg.id = 'card';
             newImg.classList.add('carte_out');
             game.tableGame.appendChild(newImg);
+            if(cardNumber === 9) {
+                if (!game.isStopBtnAlreadyPressed) {
+                    setTimeout(() => {
+                        game.displayCoqForm();
+                        game.tableGame.removeChild(game.tableGame.querySelector('#card'));
+                    }, 1100)
+                }
+                clearInterval(game.interval);
+                return;
+            };
             game.numberOfCardsPlayed++;
         }, gameState.speed);
+    },
+
+    submitCoqForm(e) {
+        e.preventDefault();
+        const counter = document.querySelector('.coq-container .counter');
+        const stopInfo = {
+            isCoqHere: true,
+            numberOfEggs: e.target.elements.numberEggs.value,
+            numberOfCardsPlayed: game.numberOfCardsPlayed,
+            chronometerValue: game.endChronometer()
+        }
+        e.target.elements.numberEggs.value = '';
+        counter.textContent = '';
+        game.stopCoqFormInterval();
+        main.socket.emit('coqEggsNumber', stopInfo);
     },
 
     stopPlayer: () => {
@@ -131,7 +159,7 @@ const main = {
     },
 
     leaveRoom() {
-        const isLeaving = confirm('Etes-vous sûr de quitter la salle ?')
+        const isLeaving = confirm('Etes-vous sûr de vouloir quitter la salle ?')
         if(isLeaving) location.reload();
     },
 

@@ -13,6 +13,7 @@ module.exports.listen = function(io) {
         socket.on('disconnect', leaveRoom);
         socket.on('stopBtnPressed', handleStopGame);
         socket.on('changeGameConfiguration', changeGameConfiguration);
+        socket.on('coqEggsNumber', handleStopGame);
    
         function createRoom(username, difficulty) {
             const hostPlayer = {
@@ -79,14 +80,19 @@ module.exports.listen = function(io) {
     
         function handleStopGame(stopInfo) {
             const roomInfo = handleGameRooms.stopGame(socket.gameCode, stopInfo, socket.id);
-            socket.emit('score', roomInfo.stopedPlayerScore)
+            socket.emit('score', roomInfo.isStopedPlayerBecauseOfCoq, roomInfo.stopedPlayerScore)
     
             if(roomInfo.isAllPlayersStoped) {
                 io.sockets.in(socket.gameCode).emit('gameInfo', {
                     clients: roomInfo.clients,
                     gameCode: socket.gameCode
                 });
-                io.sockets.in(socket.gameCode).emit('stopGame', roomInfo.winner);
+                if(roomInfo.isCoqHere) {
+                    io.sockets.in(socket.gameCode).emit('stopGame', true, roomInfo.winner)
+                }
+                else {
+                    io.sockets.in(socket.gameCode).emit('stopGame', false, roomInfo.winner);
+                }
                 setTimeout(() => {
                     io.to(roomInfo.hostId).emit('host', {
                         cards: roomInfo.hostElements.cards, 
@@ -118,7 +124,6 @@ module.exports.listen = function(io) {
             handleGameRooms.handleGameConfiguration(socket.gameCode, configuration);
        }
     
-       
     })
   
 };

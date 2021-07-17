@@ -2,9 +2,7 @@ const game = {
 
     start: (gameRoom) => {
         gameRoom.gameState.lotCarte = game.generateLotCarte(gameRoom.gameState);
-        gameRoom.gameState.listeCartePose = [];
         gameRoom.gameState.speed = game.choiceSpeed(gameRoom.difficulty);
-        gameRoom.gameState.numberPlayersStoped = 0;
         game.generateCardsList(gameRoom);
     },
 
@@ -93,6 +91,10 @@ const game = {
     calculScore(listeCartePose) {
         const oeufDispo = [];
         const pouleCouve = [];
+        const scoreObj = {
+            isCoqHereBefore5: false,
+            score: 0
+        }
         for(let i = 0 ; i < listeCartePose.length; i++){
             if(listeCartePose[i] === 0){
                 if(oeufDispo.length > 0){
@@ -109,8 +111,15 @@ const game = {
             else if(listeCartePose[i] === 2){
                 oeufDispo.push('X');
             }
+            // variante avec le coq, toutes les poules qui couvaient vont voir le coq, donc les oeufs deviennent disponibles
+            // else if (listeCartePose[i] === 9) {
+                // pouleCouve.forEach(oeufCouve => {
+                //     oeufDispo.push('X');
+                // });
+                // pouleCouve.splice(0, pouleCouve.length - 1);
+            // }
         }
-        return oeufDispo.length;
+        return oeufDispo.length; 
     },
 
     generateRandomNumber: (min, max) => {
@@ -119,8 +128,9 @@ const game = {
 
     chooseWinner: (gameRoom) => {
         let winner = {};
+
         gameRoom.clients.forEach(player => {
-            if(player.score === 5) {
+            if(player.oeufDispo === 5) {
                 if(!winner.name) {
                     winner = player;
                 }
@@ -131,8 +141,36 @@ const game = {
                 }
             }
         });
+
+        // if no one wins and someone stoped his cards list with the coq
+        // we check the value they gave
+        if(!winner.name && gameRoom.isCoqHere) {
+    
+            gameRoom.clients.forEach(player => {
+                if(player.isCoqHere && parseInt(player.coqEggsNumber, 10) === gameRoom.oeufDispoAfterCoq) {
+                    if(!winner.name) {
+                        winner = player;
+                    }
+                    else {
+                        if(player.chronometerValue < winner.chronometerValue) {
+                            winner = player;
+                        }
+                    }
+                }
+            });
+
+            if(!winner.name) {
+                winner = {
+                    name: `Personne ne gagne cette partie. ${gameRoom.oeufDispoAfterCoq} oeufs étaient disponibles après le passage de Rico le coq.`,
+                    oeufDispoAfterCoq: gameRoom.oeufDispoAfterCoq
+                }
+            }
+        }
+
+
         if(!winner.name) winner.name = 'Personne ne gagne cette partie.';
-        return winner.name;
+
+        return winner;
     }
 
 }

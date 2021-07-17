@@ -63,6 +63,7 @@
                 <div class="menu-content game active" data-menu="game">
                     <button style="display: none" type="button" id="start-game-btn">Démarrer la partie</button>
                     <button type="button" id="stop-btn" style="display: none">STOP</button>
+
                     <div class="tableGame">
                         <div class="count"></div>
                         <div class="count-number"></div>
@@ -73,6 +74,15 @@
                         <div class="canard-container">
                             <img src="/images/canard1.png" alt="">
                         </div>
+                    </div>
+
+                    <div class="coq-container">
+                        <div class="counter"></div>
+                        <form>
+                            <label for="coq-eggs">Rico le coq est arrivé. Combien d'oeufs sont disponibles selon vous ?</label>
+                            <input type="number" name="numberEggs" id="coq-eggs" autofocus>
+                            <button type="submit">Envoyer</button>
+                        </form>
                     </div>
 
                     <button id="leave-room-btn" type="button">Quitter la salle de jeu</button>

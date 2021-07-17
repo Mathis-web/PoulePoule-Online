@@ -135,6 +135,32 @@ const game = {
 
     },
 
+    displayCoqForm() {
+        game.tableGame.style.display = "none";
+        document.getElementById('stop-btn').style.display = "none";
+        const coqContainer = document.querySelector(' .coq-container');
+        coqContainer.style.display = 'flex';
+        const counter = document.querySelector('.coq-container .counter');
+        let number = 9;
+        game.coqFormInterval = setInterval(() => {
+            if(number === 0) {
+                clearInterval(game.coqFormInterval);
+                document.querySelector('.coq-container form').requestSubmit();
+                counter.textContent = '';
+                return
+            }
+            counter.textContent = number;
+            number--;
+        }, 1000);
+    },
+
+    stopCoqFormInterval() {
+        const coqContainer = document.querySelector('.coq-container');
+        coqContainer.style.display = "none";
+        game.tableGame.style.display = "flex"
+        clearInterval(game.coqFormInterval);
+    },
+
     endTimer() {
         const count = document.querySelector('.count');
         count.style.opacity = 0;
@@ -152,20 +178,31 @@ const game = {
         return duration;
     },
 
-    stopGame(winner) {
+    stopGame(isWinnerWithCoq, winner) {
         // game.tableGame.style.opacity = '0.5'
         game.isStopBtnAlreadyPressed = false;
-        game.tableGame.removeChild(game.tableGame.querySelector('#card'));
+        if(game.tableGame.querySelector('#card')) {
+            game.tableGame.removeChild(game.tableGame.querySelector('#card'));
+        }
         clearInterval(game.interval);
         const resultsDiv = document.querySelector('.results');
         game.tableGame.classList.add('omelette');
         const winnerDiv = document.querySelector('.winner-message');
-        winnerDiv.textContent = 'Vainqueur: ' + winner;
+        if(isWinnerWithCoq) {
+            winnerDiv.textContent = `Vainqueur: ${winner.name} ! ${winner.oeufDispoAfterCoq} oeufs étaient disponibles après le passage de Rico le coq.`;
+        }
+        else {
+            winnerDiv.textContent = 'Vainqueur: ' + winner.name;
+        }
         setTimeout(() => resultsDiv.style.opacity = 1, 2000);
     },
 
-    displayScore(score) {
+    displayScore(isStopedBecauseOfCoq, oeufsDispo) {
         const scoreDiv = document.querySelector('.score-message');
-        scoreDiv.textContent = `Il y avait ${score} oeufs disponibles lorsque vous avez cliqué sur STOP.`
+        if(isStopedBecauseOfCoq) {
+            scoreDiv.textContent = oeufsDispo != '' ? `Selon vous, ${oeufsDispo} oeufs étaient disponibles lorsque le coq est arrivé.` : 'Vous n\'avez pas donné de chiffre lorsque le coq est arrivé.';
+        } else {
+            scoreDiv.textContent = `Selon vous, ${oeufsDispo} oeufs étaient disponibles.`
+        }
     }
 }
