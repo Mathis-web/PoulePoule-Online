@@ -101,7 +101,33 @@ const game = {
         document.querySelector('.results').style.opacity = 0;
     },
 
-    canardIsHere() {
+    canardIsHere(numberCanardAppearance) {
+        const canardContainer = document.querySelector('.tableGame .canard-container');
+        canardContainer.appendChild(game.imgCanardScreamer);
+        canardContainer.style.opacity = 1;
+        const canardSound = document.getElementById('audio-canard');
+
+        const removeCanardContainer = () => {
+            canardContainer.style.opacity = 0;
+            canardContainer.removeChild(game.imgCanardScreamer);
+        }
+
+        canardSound.play();
+        canardSound.currentTime = 0;
+        if(numberCanardAppearance === 1) {
+            setTimeout(() => {
+                removeCanardContainer();
+            }, 600)
+        }
+        else if (numberCanardAppearance === 2) {
+            setTimeout(() => {
+                game.imgCanardScreamer.style.transform = "scaleX(-1)";
+                canardSound.play();
+                setTimeout(() => {
+                    removeCanardContainer();
+                }, 300)
+            }, 300)
+        }
 
     },
 

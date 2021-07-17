@@ -1,6 +1,6 @@
 const main = {
-    // socket: io('ws://localhost:3000'),
-    socket: io('https://poulepoule-online.herokuapp.com/'),
+    socket: io('ws://localhost:3000'),
+    // socket: io('https://poulepoule-online.herokuapp.com/'),
 
     init: () => {
         main.usernameInput = document.getElementById('username');
@@ -8,7 +8,7 @@ const main = {
         main.difficultySelection = document.getElementById('select-difficulty-homepage');
         main.handleEventListeners();
         main.handleSocketEventListeners();
-        main.preloadImages();
+        main.preloadMedias();
         main.addCardsSettingsInDOM();
     },
 
@@ -20,7 +20,7 @@ const main = {
         main.socket.on('startGame', main.displayNewCard);
         main.socket.on('stopGame', game.stopGame);
         main.socket.on('score', game.displayScore);
-        main.socket.on('disconnect', main.leaveRoom);
+        main.socket.on('disconnect', main.disconnectError);
         main.socket.on('errorJoinGame', (message) => {
             document.getElementById('homepage').style.display = "block";
             document.getElementById('gamepage').style.display = "none";
@@ -82,6 +82,7 @@ const main = {
 
     displayNewCard(gameState) {
         game.numberOfCardsPlayed = 0;
+        let numberCanardAppearance = 0;
         game.interval = setInterval(() => {
             if(gameState.listeCartePose.length === game.numberOfCardsPlayed) {
                 clearInterval(game.interval);
@@ -93,7 +94,10 @@ const main = {
             }
             // get the number of the card to display from the list in the gameState object
             const cardNumber = gameState.listeCartePose[game.numberOfCardsPlayed]
-            if(cardNumber === 4) game.canardIsHere();
+            if(cardNumber === 4) {
+                numberCanardAppearance++;
+                game.canardIsHere(numberCanardAppearance);
+            };
             // and get that card with the corresponding index in arrayCard
             // ex: cardNumber = 0, so arrayCards[0] corresponds to the chicken card 
             if(gameState.speed < 800) {
@@ -121,9 +125,14 @@ const main = {
         main.socket.emit('stopBtnPressed', stopInfo);
     },
 
-    leaveRoom() {
+    disconnectError() {
         alert("Une erreur s'est produite, vous allez être redirigé vers la page d'accueil.");
         location.reload();
+    },
+
+    leaveRoom() {
+        const isLeaving = confirm('Etes-vous sûr de quitter la salle ?')
+        if(isLeaving) location.reload();
     },
 
     changeGameConfiguration(e) {
@@ -138,7 +147,7 @@ const main = {
         main.socket.emit('changeGameConfiguration', gameConfiguration)
     },
 
-    preloadImages() {
+    preloadMedias() {
         const imgPoule = document.createElement('img');
         const imgRenard = document.createElement('img');
         const imgOeuf = document.createElement('img');
@@ -149,6 +158,10 @@ const main = {
         const imgVerDeTerre = document.createElement('img');
         const imgFermier = document.createElement('img');
         const imgCoq = document.createElement('img');
+
+        const imgCanardScreamer = document.createElement('img');
+        imgCanardScreamer.src = '/images/canard1.png';
+        game.imgCanardScreamer = imgCanardScreamer;
 
         imgPoule.src = "/images/0.png";
         imgRenard.src = "/images/1.png";
