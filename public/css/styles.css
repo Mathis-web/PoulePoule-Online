@@ -537,8 +537,8 @@ body{
     #gamepage .game {
         width: 100%;
     }
-    #gamepage .results {
-        font-size: 1rem;
+    #gamepage .results, .coq-container form {
+        font-size: 0.8rem;
     }
     .tableGame {
         min-height: 300px;
