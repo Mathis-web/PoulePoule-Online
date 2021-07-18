@@ -39,6 +39,7 @@ const game = {
         if (choosenCards.includes(8)) lotCarte.push(8, 2, 2, 2, 2);
         if (choosenCards.includes(9)) lotCarte.push(9);
 
+        // randomize the lotCarte array
         for(let i = lotCarte.length - 1; i > 0; i--){
             const j = Math.floor(Math.random() * i);
             const temp = lotCarte[i];
@@ -91,35 +92,74 @@ const game = {
     calculScore(listeCartePose) {
         const oeufDispo = [];
         const pouleCouve = [];
-        const scoreObj = {
-            isCoqHereBefore5: false,
-            score: 0
-        }
+        const chienPresent = [];
+        const oeufAutrucheDispo = [];
+        const verDeTerrePresent = [];
+
         for(let i = 0 ; i < listeCartePose.length; i++){
-            if(listeCartePose[i] === 0){
-                if(oeufDispo.length > 0){
+
+            if(listeCartePose[i] === 0){ // poule
+                if(verDeTerrePresent.length > 0) {
+                    verDeTerrePresent.splice(0, 1);
+                }
+                else if(oeufDispo.length > 0){
                     pouleCouve.push('X');
                     oeufDispo.splice(0, 1);
                 }
             }
-            else if(listeCartePose[i] === 1){
+
+            else if(listeCartePose[i] === 1){ // renard
+                if(pouleCouve.length > 0){
+                    if(chienPresent.length > 0) {
+                        chienPresent.splice(0, 1);
+                    } 
+                    else {
+                        pouleCouve.splice(0,1);
+                        oeufDispo.push('X');
+                    }
+                }
+            }
+
+            else if(listeCartePose[i] === 2){ // oeuf
+                oeufDispo.push('X');
+            }
+
+            else if (listeCartePose[i] === 3) { // chien
+                chienPresent.push('X');
+            }
+
+            else if (listeCartePose[i] === 4) { // canard
+
+            }
+
+            else if (listeCartePose[i] === 5) { // renard déguisé
                 if(pouleCouve.length > 0){
                     pouleCouve.splice(0,1);
                     oeufDispo.push('X');
                 }
             }
-            else if(listeCartePose[i] === 2){
-                oeufDispo.push('X');
+
+            else if (listeCartePose[i] === 6) { // oeuf d'autruche
+                oeufAutrucheDispo.push('X');
+            }
+
+            else if (listeCartePose[i] === 7) { // ver de terre
+                verDeTerrePresent.push('X');
+            }
+
+            else if (listeCartePose[i] === 8) { // fermier
+                oeufDispo.splice(0, oeufDispo.length);
+                oeufAutrucheDispo.splice(0, oeufAutrucheDispo.length);
             }
             // variante avec le coq, toutes les poules qui couvaient vont voir le coq, donc les oeufs deviennent disponibles
             // else if (listeCartePose[i] === 9) {
                 // pouleCouve.forEach(oeufCouve => {
                 //     oeufDispo.push('X');
                 // });
-                // pouleCouve.splice(0, pouleCouve.length - 1);
+                // pouleCouve.splice(0, pouleCouve.length);
             // }
         }
-        return oeufDispo.length; 
+        return oeufDispo.length + oeufAutrucheDispo.length * 2; 
     },
 
     generateRandomNumber: (min, max) => {
