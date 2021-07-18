@@ -56,8 +56,8 @@ const game = {
         for(let i = 0; i < arrayCardsLength; i++) {
             const randomNumber = game.generateRandomNumber(0, gameState.lotCarte.length);
             const cardNumber = gameState.lotCarte[randomNumber];
-            // coq can only appears at index 6 minimum
-            if(cardNumber === 9 && i < 5) {
+            // coq can only appears at index 8 minimum
+            if(cardNumber === 9 && i < 7) {
                 i--;
                 continue;
             }
