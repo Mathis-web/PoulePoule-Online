@@ -56,6 +56,11 @@ const game = {
         for(let i = 0; i < arrayCardsLength; i++) {
             const randomNumber = game.generateRandomNumber(0, gameState.lotCarte.length);
             const cardNumber = gameState.lotCarte[randomNumber];
+            // coq can only appears at index 6 minimum
+            if(cardNumber === 9 && i < 5) {
+                i--;
+                continue;
+            }
             gameState.listeCartePose.push(cardNumber);
             gameState.lotCarte.splice(gameState.lotCarte.indexOf(cardNumber), 1);
         }

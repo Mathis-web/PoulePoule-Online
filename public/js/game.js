@@ -202,7 +202,7 @@ const game = {
         if(isStopedBecauseOfCoq) {
             scoreDiv.textContent = oeufsDispo != '' ? `Selon vous, ${oeufsDispo} oeufs étaient disponibles lorsque le coq est arrivé.` : 'Vous n\'avez pas donné de chiffre lorsque le coq est arrivé.';
         } else {
-            scoreDiv.textContent = `Selon vous, ${oeufsDispo} oeufs étaient disponibles.`
+            scoreDiv.textContent = `${oeufsDispo} oeufs étaient disponibles lorsque vous avez appuyé sur STOP.`;
         }
     }
 }
